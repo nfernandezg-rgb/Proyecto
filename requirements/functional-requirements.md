@@ -1,47 +1,83 @@
 # Requerimientos Funcionales
 
-### RF-01: Registro de eventos
+### RF-01: 
 
-El sistema deberá permitir a un usuario autenticado crear un evento ingresando:
+El sistema deberá permitir el acceso público a la sección de eventos para usuarios consultantes sin necesidad de iniciar sesión.
 
-* Nombre
-* Descripción
-* Fecha
-* Hora
-* Ubicación
-* Tipo de evento
-* Modalidad (presencial/virtual)
+### RF-02: 
 
-### RF-02: Listado de eventos
+El sistema deberá permitir el inicio de sesión mediante usuario y contraseña para usuarios Editores y Administradores.
 
-El sistema deberá mostrar todos los eventos disponibles ordenados por fecha ascendente. 
-Criterio verificable:
-Al consultar la base de datos, la lista debe coincidir con los registros almacenados.
+### RF-03: 
 
-### RF-03: Edición de eventos
+El sistema deberá mostrar la lista de eventos publicados y aprobados.
 
-El sistema deberá permitir modificar los datos de un evento existente.
-Criterio verificable:
-Después de editar, los cambios deben persistir en MongoDB Atlas (Base de datos elegida para el proyecto)
+### RF-04: 
 
-### RF-04: Eliminación de eventos
+El sistema deberá permitir buscar eventos por nombre y filtrar por rango de fechas.
 
-El sistema deberá permitir eliminar un evento existente.
-Criterio verificable:
-El registro eliminado no debe existir en la base de datos después de la operación DELETE (eliminacion).
+### RF-05: 
 
-### RF-05: Filtro por tipo
+El sistema deberá permitir a los consultantes inscribirse a un evento mediante un formulario.
 
-El sistema deberá permitir filtrar eventos por tipo (ej. taller, conferencia, actividad cultural, ETC).
+### RF-06: 
 
-### RF-06: Visualización de detalles
+Al enviar correctamente el formulario de inscripción, el sistema deberá mostrar un mensaje de confirmación indicando “Inscripción enviada”.
 
-El sistema deberá permitir visualizar el detalle completo de un evento al seleccionarlo.
+## Editores
 
-### RF-07: Validación de fechas
+### RF-07: 
 
-El sistema no deberá permitir registrar eventos con fecha anterior a la actual.
+El sistema deberá permitir a los editores crear nuevos eventos mediante un formulario.
 
-### RF-08: Confirmación de asistencia
+### RF-08: 
 
-El sistema deberá permitir que un usuario confirme asistencia a un evento.
+El sistema deberá validar que todos los campos obligatorios del evento estén completos antes de permitir su envío.
+
+### RF-09: 
+
+Si el formulario está completo, el sistema deberá mostrar el mensaje “Evento enviado”.
+
+### RF-10: 
+
+Si el formulario está incompleto, el sistema deberá mostrar el mensaje “Evento incompleto”.
+
+### RF-11:
+
+El sistema deberá permitir a los editores modificar eventos existentes.
+
+### FR-12:
+
+El sistema deberá permitir a los editores eliminar eventos publicados, mostrando previamente un mensaje de confirmación.
+
+### RF-13: 
+
+El sistema deberá almacenar eventos incompletos en la sección “Eventos Borrador”.
+
+### RF-14:
+
+El sistema deberá permitir a los editores visualizar la lista de suscriptores de cada evento.
+
+### RF-15: 
+
+El sistema deberá enviar correos automáticos cuando:
+
+Un evento sea rechazado.
+Un comentario sea rechazado.
+
+### RF-16:
+
+El sistema deberá mostrar a los administradores los eventos pendientes de revisión.
+
+### RF-17:
+
+El sistema deberá permitir a los administradores aprobar, rechazar y eliminar eventos.
+
+### RF-18:
+
+El sistema deberá permitir a los administradores aprobar o rechazar comentarios en la lista de difusion.
+
+### RF-19:
+
+El sistema deberá publicar automáticamente un evento aprobado para que sea visible a los consultantes.
+
