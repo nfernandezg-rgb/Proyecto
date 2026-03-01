@@ -1,7 +1,7 @@
 # Proyecto Final
 Proyecto integrador 1| Proyecto Final
 
-## Convenciones de nomenclatura
+## Convenciones de nomenclatura y formato de codigo
 
 ### Backend 
 
