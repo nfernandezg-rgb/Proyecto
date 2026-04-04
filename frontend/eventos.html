@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Eventos</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- CSS propio -->
+  <link rel="stylesheet" href="css/topbar.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div id="header"></div>
+
+<div id="navbar"></div>
+
+<!-- CONTENIDO -->
+<main class="container my-5">
+
+  <!-- TITULO -->
+  <h2 class="mb-3">Eventos | Política Nacional de Discapacidad</h2>
+
+  <!-- BUSCADOR -->
+  <div class="filtro-box p-3 mb-4 rounded">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="Buscar evento">
+      </div>
+
+      <div class="col-md-3">
+        <input type="date" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <input type="date" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <!-- EVENTOS -->
+  <div id="contenedor-eventos" class="row g-4">
+
+    <!-- CARD EVENTO -->
+    <div class="col-md-6">
+      <div class="card evento-card">
+
+        <img src="https://picsum.photos/600/300" class="card-img-top">
+
+        <div class="card-body d-flex gap-3">
+
+          <!-- FECHA -->
+          <div class="fecha-box text-center">
+            <h3>01</h3>
+            <span>AGO</span>
+          </div>
+
+          <!-- INFO -->
+          <div>
+            <h5>Publicación de Política Nacional de Discapacidad</h5>
+
+            <p class="mb-1">:date: 01 Agosto 2020</p>
+            <p class="mb-1">:alarm_clock: 15:00 - 16:00</p>
+            <p>:round_pushpin: Plataforma Zoom</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer text-center py-3">
+  <p>© Proyecto Eventos</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/load-headerAndNavbar.js"></script>
+</body>
+</html>

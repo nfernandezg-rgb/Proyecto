@@ -1,0 +1,62 @@
+:root {
+  --azul-claro: #9CC8FF;
+  --azul-principal: #006AEA;
+  --azul-oscuro: #162A98;
+  --gris-claro: #D2D2D2;
+  --gris-texto: #7C7B75;
+}
+
+/* HEADER */
+.top-header {
+  background-color: var(--gris-claro);
+}
+
+/* NAVBAR */
+.custom-navbar {
+  background-color: var(--azul-oscuro);
+}
+
+/* FILTRO */
+.filtro-box {
+  background-color: var(--gris-claro);
+}
+
+/* CARD */
+.evento-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.evento-card:hover {
+  transform: scale(1.02);
+}
+
+/* FECHA */
+.fecha-box {
+  background-color: var(--azul-oscuro);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  min-width: 70px;
+}
+
+/* FOOTER */
+.footer {
+  background-color: var(--gris-texto);
+  color: white;
+}
+
+
+/*
+
+.topbar{
+    height: 65px;
+    background-color: var(--azul);
+    color: var(--blanco);
+    position: relative;
+    border-bottom: 7px solid var(--turquesa);
+}
+
+*/
+
