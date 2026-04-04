@@ -6,16 +6,6 @@
   --gris-texto: #7C7B75;
 }
 
-/* HEADER */
-.top-header {
-  background-color: var(--gris-claro);
-}
-
-/* NAVBAR */
-.custom-navbar {
-  background-color: var(--azul-oscuro);
-}
-
 /* FILTRO */
 .filtro-box {
   background-color: var(--gris-claro);
@@ -46,17 +36,3 @@
   background-color: var(--gris-texto);
   color: white;
 }
-
-
-/*
-
-.topbar{
-    height: 65px;
-    background-color: var(--azul);
-    color: var(--blanco);
-    position: relative;
-    border-bottom: 7px solid var(--turquesa);
-}
-
-*/
-
