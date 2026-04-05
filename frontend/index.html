@@ -1,98 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Inicio</title>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/estilos-components.css">
-  <link rel="stylesheet" href="css/estilos.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/estilos-components.css">
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 
 <body>
 
-<div id="header"></div>
-<div id="navbar"></div>
-
-<!-- HERO -->
-<section class="hero d-flex align-items-center text-center">
-  <div class="container">
-    <h1 class="mb-3">Sistema de Eventos Inclusivos</h1>
-    <p class="mb-4">
-      Descubre, participa y forma parte de actividades relacionadas con la Política Nacional de Discapacidad.
-    </p>
-
-    <a href="eventos.html" class="btn btn-primary btn-lg">
-      Ver eventos
-    </a>
-  </div>
-</section>
-
-<!-- EVENTOS DESTACADOS -->
-<section class="container my-5">
-
-  <h3 class="mb-4">Eventos destacados</h3>
-
-  <div class="row g-4">
-
-    <div class="col-md-4">
-      <div class="card evento-card">
-        <img src="https://picsum.photos/400/250" class="card-img-top">
-
-        <div class="card-body">
-          <h5>Evento inclusivo</h5>
-          <p>01 Agosto 2020</p>
-        </div>
-      </div>
+    <div class="header-container">
+        <div id="header"></div>
+        <div id="navbar"></div>
     </div>
 
-    <div class="col-md-4">
-      <div class="card evento-card">
-        <img src="https://picsum.photos/400/250" class="card-img-top">
+    <!-- contenido principal (HERO) -->
+    <section class="hero d-flex align-items-center text-center">
+        <div class="container">
+            <h1 class="mb-3">Sistema de Eventos Inclusivos</h1>
+            <p class="mb-4">
+                Descubre, participa y forma parte de actividades relacionadas con la Política Nacional de Discapacidad.
+            </p>
 
-        <div class="card-body">
-          <h5>Capacitación</h5>
-          <p>10 Agosto 2020</p>
+            <a href="eventos.html" class="btn btn-primary btn-lg">
+                Ver eventos
+            </a>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <div class="col-md-4">
-      <div class="card evento-card">
-        <img src="https://picsum.photos/400/250" class="card-img-top">
+    <!-- EVENTOS DESTACADOS -->
+    <section class="container my-5">
 
-        <div class="card-body">
-          <h5>Conferencia</h5>
-          <p>15 Agosto 2020</p>
+        <h3 class="mb-4">Eventos destacados</h3>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card evento-card">
+                    <img src="https://picsum.photos/400/250" class="card-img-top">
+
+                    <div class="card-body">
+                        <h5>Evento inclusivo</h5>
+                        <p>01 Agosto 2020</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card evento-card">
+                    <img src="https://picsum.photos/400/250" class="card-img-top">
+
+                    <div class="card-body">
+                        <h5>Capacitación</h5>
+                        <p>10 Agosto 2020</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card evento-card">
+                    <img src="https://picsum.photos/400/250" class="card-img-top">
+
+                    <div class="card-body">
+                        <h5>Conferencia</h5>
+                        <p>15 Agosto 2020</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
-    </div>
 
-  </div>
+    </section>
 
-</section>
+    <!-- CTA (call to action) -->
+    <section class="cta text-center py-5">
+        <h3>¿Eres organizador de eventos o administrador?</h3>
+        <p>Inicia sesión para crear y gestionar eventos</p>
 
-<!-- CTA (call to action) -->
-<section class="cta text-center py-5">
-  <h3>¿Eres organizador de eventos o administrador?</h3>
-  <p>Inicia sesión para crear y gestionar eventos</p>
+        <button class="btn btn-outline-primary">
+            Iniciar sesión
+        </button>
+    </section>
 
-  <button class="btn btn-outline-primary">
-    Iniciar sesión
-  </button>
-</section>
+    <!-- FOOTER -->
+    <div id="footer"></div>
 
-<!-- FOOTER -->
-<div id="footer"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/load-components.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/load-components.js"></script>
 
 </body>
+
 </html>

@@ -6,12 +6,12 @@
   --gris-texto: #7C7B75;
 }
 
-/* FILTRO */
+/* filtro */
 .filtro-box {
   background-color: var(--gris-claro);
 }
 
-/* CARD */
+/* tarjetas */
 .evento-card {
   border-radius: 12px;
   overflow: hidden;
@@ -22,7 +22,7 @@
   transform: scale(1.02);
 }
 
-/* FECHA */
+/* fecha */
 .fecha-box {
   background-color: var(--azul-oscuro);
   color: white;
@@ -31,7 +31,7 @@
   min-width: 70px;
 }
 
-/* FOOTER */
+/* footer */
 .footer {
   background-color: var(--gris-texto);
   color: white;
@@ -43,11 +43,12 @@
   color: white;
 }
 
-/* CTA */
+/* CTA de index*/
 .cta {
   background-color: #D2D2D2;
 }
 
+/* cta de inscripcion (eventos.html) */
 .cta-inscripcion {
   background: linear-gradient(to right, #162A98, #006AEA);
   color: white;
@@ -62,3 +63,16 @@
   font-weight: bold;
 }
 
+
+/* estilos de model inscripcion en eventos.html */
+.modal-content {
+  border-radius: 10px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}

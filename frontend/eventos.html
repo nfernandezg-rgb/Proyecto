@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Eventos</title>
@@ -16,93 +17,162 @@
 
 <body>
 
-<!-- HEADER -->
+  <!-- HEADER -->
 
-<div id="header"></div>
-
-<div id="navbar"></div>
-
-<!-- CONTENIDO -->
-<main class="container my-5">
-
-  <!-- TITULO -->
-  <h2 class="mb-3">Eventos | Política Nacional de Discapacidad</h2>
-
-  <!-- BUSCADOR -->
-  <div class="filtro-box p-3 mb-4 rounded">
-    <div class="row g-3">
-      <div class="col-md-6">
-        <input type="text" class="form-control" placeholder="Buscar evento">
-      </div>
-
-      <div class="col-md-3">
-        <input type="date" class="form-control">
-      </div>
-
-      <div class="col-md-3">
-        <input type="date" class="form-control">
-      </div>
-    </div>
+  <div class="header-container">
+    <div id="header"></div>
+    <div id="navbar"></div>
   </div>
 
-  <!-- EVENTOS -->
-  <div id="contenedor-eventos" class="row g-4">
+  <!-- CONTENIDO -->
+  <main class="container my-5">
 
-    <!-- CARD EVENTO -->
-    <div class="col-md-6">
-      <div class="card evento-card">
+    <!-- TITULO -->
+    <h2 class="mb-3">Eventos | Política Nacional de Discapacidad</h2>
 
-        <img src="https://picsum.photos/600/300" class="card-img-top">
+    <!-- BUSCADOR -->
+    <div class="filtro-box p-3 mb-4 rounded">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Buscar evento">
+        </div>
 
-        <div class="card-body d-flex gap-3">
+        <div class="col-md-3">
+          <input type="date" class="form-control">
+        </div>
 
-          <!-- FECHA -->
-          <div class="fecha-box text-center">
-            <h3>01</h3>
-            <span>AGO</span>
-          </div>
-
-          <!-- INFO -->
-          <div>
-            <h5>Publicación de Política Nacional de Discapacidad</h5>
-
-            <p class="bi bi-calendar3"> 01 Agosto 2020</p>
-            <p class="bi bi-stopwatch"> 15:00 - 16:00</p>
-            <p class="bi bi-geo-alt"> Plataforma Zoom</p>
-          </div>
-
+        <div class="col-md-3">
+          <input type="date" class="form-control">
         </div>
       </div>
     </div>
 
+    <!-- EVENTOS -->
+    <div id="contenedor-eventos" class="row g-4">
+
+      <!-- CARD EVENTO -->
+      <div class="col-md-6">
+        <div class="card evento-card">
+
+          <img src="https://picsum.photos/600/300" class="card-img-top">
+
+          <div class="card-body d-flex gap-3">
+
+            <!-- FECHA -->
+            <div class="fecha-box text-center">
+              <h3>01</h3>
+              <span>AGO</span>
+            </div>
+
+            <!-- INFO -->
+            <div>
+              <h5>Publicación de Política Nacional de Discapacidad</h5>
+
+              <p class="bi bi-calendar3"> 01 Agosto 2020</p>
+              <p class="bi bi-stopwatch"> 15:00 - 16:00</p>
+              <p class="bi bi-geo-alt"> Plataforma Zoom</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <section class="cta-inscripcion text-center py-5">
+
+    <div class="container">
+
+      <h3 class="mb-3">Inscripción a Eventos PONADIS</h3>
+
+      <p class="mb-4">
+        Con el fin de mantenerse actualizado en los últimos eventos del Sistema Costarricense
+        de Información sobre Discapacidad (SICID), puede inscribirse para recibir notificaciones
+        por correo electrónico sobre los eventos más recientes.
+      </p>
+
+      <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#modalInscripcion">
+        Inscribirme
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <div id="footer"></div>
+
+  <!--Codigo para el modal-->
+  <div class="modal fade" id="modalInscripcion" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- HEADER -->
+        <div class="modal-header">
+          <h5 class="modal-title">Inscripción a Eventos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- BODY -->
+        <div class="modal-body">
+
+          <p>
+            Complete los datos solicitados para inscribirse y recibir notificaciones de los eventos más recientes.
+          </p>
+
+          <form id="formInscripcion">
+
+            <div class="mb-3">
+              <label class="form-label">Nombre completo</label>
+              <input type="text" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Profesión u oficio</label>
+              <input type="text" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Entidad</label>
+              <input type="text" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Razón de inscripción</label>
+              <textarea class="form-control"></textarea>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" required>
+              <label class="form-check-label">
+                Acepto recibir notificaciones
+              </label>
+            </div>
+
+          </form>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit" form="formInscripcion">
+            Inscribirme
+          </button>
+        </div>
+
+      </div>
+    </div>
   </div>
 
-</main>
-
-<section class="cta-inscripcion text-center py-5">
-
-  <div class="container">
-
-    <h3 class="mb-3">Inscripción a Eventos PONADIS</h3>
-
-    <p class="mb-4">
-      Con el fin de mantenerse actualizado en los últimos eventos del Sistema Costarricense 
-      de Información sobre Discapacidad (SICID), puede inscribirse para recibir notificaciones 
-      por correo electrónico sobre los eventos más recientes.
-    </p>
-
-    <button class="btn btn-light btn-lg">
-      Inscribirme
-    </button>
-
-  </div>
-
-</section>
-
-<!-- FOOTER -->
-<div id="footer"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/load-components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/load-components.js"></script>
 </body>
+
 </html>
