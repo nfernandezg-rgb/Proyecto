@@ -36,3 +36,14 @@
   background-color: var(--gris-texto);
   color: white;
 }
+
+.hero {
+  height: 60vh;
+  background: linear-gradient(to right, #162A98, #006AEA);
+  color: white;
+}
+
+/* CTA */
+.cta {
+  background-color: #D2D2D2;
+}
