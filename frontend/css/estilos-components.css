@@ -33,8 +33,10 @@
 .footer-logo {
   max-width: 120px;
   opacity: 0.8;
+  cursor: pointer;
   filter: grayscale(100%)contrast(2);
    transition: 0.3s;
+
 }
 
 .footer-logo:hover {
