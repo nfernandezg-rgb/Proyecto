@@ -1,10 +1,12 @@
-//Cargar componentes
+//Cargar componentes header
 fetch("components/header.html")
   .then(res => res.text())
   .then(data => {
     document.getElementById("header").innerHTML = data;
   });
 
+
+// navbar
 fetch("components/navbar.html")
   .then(res => res.text())
   .then(data => {
@@ -30,3 +32,12 @@ document.addEventListener("click", (e) => {
     }
   }
 });
+
+
+//footer
+
+fetch("components/footer.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("footer").innerHTML = data;
+  });

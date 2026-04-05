@@ -16,6 +16,36 @@
   background-color: var(--azul-oscuro);
 }
 
+/* footer */
+.footer-top {
+  background-color: var(--gris-claro);
+}
+
+.footer-bottom {
+  background-color: var(--gris-texto);
+  color: white;
+}
+
+.footer-bottom small {
+  font-size: 14px;
+}
+
+.footer-logo {
+  max-width: 120px;
+  opacity: 0.8;
+  filter: grayscale(100%)contrast(2);
+   transition: 0.3s;
+}
+
+.footer-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.footer-top img {
+  height: 100px;
+  object-fit: contain;
+}
 
 /*
 
