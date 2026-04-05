@@ -47,3 +47,18 @@
 .cta {
   background-color: #D2D2D2;
 }
+
+.cta-inscripcion {
+  background: linear-gradient(to right, #162A98, #006AEA);
+  color: white;
+}
+
+.cta-inscripcion p {
+  max-width: 700px;
+  margin: auto;
+}
+
+.cta-inscripcion button {
+  font-weight: bold;
+}
+
