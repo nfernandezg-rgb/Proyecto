@@ -15,6 +15,7 @@
 .evento-card {
   border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
   transition: 0.3s;
 }
 
@@ -75,4 +76,23 @@
 
 .modal-footer {
   border-top: none;
+}
+
+.modal-footer .btn {
+    min-width: 200px;
+}
+
+/*detalle-evento.html*/
+
+.fecha-box {
+  background-color: var(--azul-oscuro);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.table {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
 }

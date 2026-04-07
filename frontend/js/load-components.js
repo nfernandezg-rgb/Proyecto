@@ -41,3 +41,38 @@ fetch("components/footer.html")
   .then(data => {
     document.getElementById("footer").innerHTML = data;
   });
+
+ 
+  //sweetalert 
+  document.addEventListener("submit", (e) => {
+  if (e.target.id === "formInscripcion") {
+    e.preventDefault();
+
+    const inputs = e.target.querySelectorAll("input, textarea");
+    let valid = true;
+
+    inputs.forEach(input => {
+      if (input.hasAttribute("required") && !input.value.trim()) {
+        valid = false;
+      }
+    });
+
+    if (!valid) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Por favor complete todos los campos obligatorios"
+      });
+      return;
+    }
+
+    // ÉXITO (simulado)
+    Swal.fire({
+      icon: "success",
+      title: "Inscripción enviada",
+      text: "Su solicitud fue enviada correctamente"
+    });
+
+    e.target.reset();
+  }
+});
