@@ -76,3 +76,75 @@ fetch("components/footer.html")
     e.target.reset();
   }
 });
+
+
+//cargar lectura rapida desplegar al dar click en el boton
+
+document.addEventListener("click", (e) => {
+  if (e.target.id === "btnLectura") {
+    const box = document.getElementById("lecturaFacil");
+    box.classList.toggle("d-none");
+  }
+});
+
+
+// modal de realizar consulta
+
+document.addEventListener("click", (e) => {
+
+  if (e.target.id === "btnEnviarConsulta") {
+
+    const correo = document.getElementById("correoConsulta").value;
+    const consulta = document.getElementById("textoConsulta").value;
+
+    if (!correo || !consulta) {
+      Swal.fire({
+        icon: "error",
+        title: "Campos incompletos",
+        text: "Por favor complete todos los campos"
+      });
+      return;
+    }
+
+    Swal.fire({
+      icon: "success",
+      title: "Consulta enviada",
+      text: "Su consulta ha sido enviada correctamente"
+    });
+
+    // limpiar
+    document.getElementById("formConsulta").reset();
+
+    // cerrar modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modalConsulta'));
+    modal.hide();
+  }
+
+});
+
+
+//formulario
+
+document.addEventListener("click", (e) => {
+
+  const steps = document.querySelectorAll(".step");
+
+  // IR A PASO 2
+  if (e.target.id === "btnSiguiente") {
+    document.getElementById("paso1").classList.add("d-none");
+    document.getElementById("paso2").classList.remove("d-none");
+
+    steps[0].classList.remove("active");
+    steps[1].classList.add("active");
+  }
+
+  // VOLVER A PASO 1
+  if (e.target.id === "btnAnterior") {
+    document.getElementById("paso2").classList.add("d-none");
+    document.getElementById("paso1").classList.remove("d-none");
+
+    steps[1].classList.remove("active");
+    steps[0].classList.add("active");
+  }
+
+});
