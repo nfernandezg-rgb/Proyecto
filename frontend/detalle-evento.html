@@ -6,6 +6,7 @@
     <title>Detalle Evento</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/estilos-components.css">
     <link rel="stylesheet" href="css/estilos.css">
 </head>
@@ -24,7 +25,7 @@
         <h2>Eventos | Política Nacional de Discapacidad</h2>
 
         <!-- IMAGEN + INFO -->
-        <div class="card mb-4">
+        <div class="card detalle-card mb-4">
 
             <img src="https://picsum.photos/900/300" class="card-img-top">
 
@@ -58,7 +59,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card p-3">
+                <div class="card p-3 info-card">
                     <h6>Información del evento</h6>
                     <p>Fecha: 01 Agosto 2020</p>
                     <p>Hora: 15:00 - 16:00</p>
@@ -72,7 +73,7 @@
         <div class="row mb-4">
 
             <div class="col-md-6">
-                <div class="card p-3">
+                <div class="card p-3 publico-card">
                     <h6>Público Meta</h6>
                     <p>Personas interesadas en inclusión y discapacidad.</p>
                 </div>
@@ -120,13 +121,74 @@
 
             <div class="d-flex gap-3 flex-wrap">
 
-                <button class="btn btn-outline-primary">
-                    Lista PDF del evento
+                <button id="btnLectura" class="btn btn-outline-primary">
+                    Lectura facil del evento
                 </button>
 
-                <button class="btn btn-outline-secondary">
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalConsulta">
                     Realizar consulta
                 </button>
+
+            </div>
+
+            <!-- MODAL CONSULTA -->
+            <div class="modal fade" id="modalConsulta" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title w-100 text-center">Consulta de Evento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <p class="text-center small">
+                                Para solicitar más información o aclarar dudas acerca de este evento,
+                                escriba su consulta en el recuadro siguiente y un correo electrónico.
+                            </p>
+
+                            <!-- FORM -->
+                            <form id="formConsulta">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="correoConsulta" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Consulta</label>
+                                    <textarea class="form-control" id="textoConsulta" rows="4" required></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" id="btnEnviarConsulta">Aceptar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="lecturaFacil" class="lectura-box mt-4 d-none">
+
+                <h5>Publicación de Política Nacional de Discapacidad 2020 - 2030</h5>
+
+                <p>
+                    Estamos considerando que aquellos que hoy tienen prueba negativa y están asintomáticos...
+                </p>
+
+                <p>
+                    El doctor explicó que en el centro médico se procedió a extremar medidas de bioseguridad...
+                </p>
+
+                <p>
+                    Esta acción busca la salvaguarda de los usuarios y funcionarios...
+                </p>
 
             </div>
 
@@ -134,9 +196,9 @@
 
         <!-- BOTÓN -->
         <div class="text-center my-4">
-            <button class="btn btn-primary px-5 py-2">
+            <a href="formulario-inscripcion.html" class="btn btn-inscripcion px-5 py-2">
                 Inscripción a Evento
-            </button>
+            </a>
         </div>
 
     </main>
@@ -145,7 +207,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/load-components.js"></script>
-    
+
     <script>
         const params = new URLSearchParams(window.location.search);
         const id = params.get("id");
@@ -171,6 +233,7 @@
             document.querySelector("h4").textContent = evento.titulo;
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
