@@ -148,3 +148,48 @@ document.addEventListener("click", (e) => {
   }
 
 });
+
+
+//login 
+
+document.addEventListener("click", (e) => {
+
+  if (e.target.id === "btnLogin") {
+
+    const usuario = document.getElementById("usuario").value;
+    const password = document.getElementById("password").value;
+
+    if (!usuario || !password) {
+      Swal.fire({
+        icon: "error",
+        title: "Campos incompletos",
+        text: "Ingrese usuario y contraseña"
+      });
+      return;
+    }
+
+    // SIMULACIÓN
+    if (usuario === "admin" && password === "123") {
+      Swal.fire({
+        icon: "success",
+        title: "Bienvenido Admin"
+      }).then(() => {
+        window.location.href = "admin-dashboard.html";
+      });
+    } else if (usuario === "editor" && password === "123") {
+      Swal.fire({
+        icon: "success",
+        title: "Bienvenido Editor"
+      }).then(() => {
+        window.location.href = "editor-dashboard.html";
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Credenciales incorrectas"
+      });
+    }
+
+  }
+
+});
