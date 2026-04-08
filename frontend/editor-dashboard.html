@@ -17,59 +17,25 @@
 
 <body>
 
-    <!-- TOPBAR -->
-    <nav class="editor-topbar d-flex justify-content-between align-items-center px-4">
+  <div id="editor-topbar"></div>
 
-        <div class="fw-bold">
-            SICID - Editor
-        </div>
+  <!-- CONTENIDO -->
+  <div class="d-flex">
 
-        <div class="d-flex align-items-center gap-3">
-            <button class="btn btn-sm btn-light">A-</button>
-            <button class="btn btn-sm btn-light">A+</button>
-            <i class="bi bi-sun"></i>
-            <i class="bi bi-bell"></i>
-            <div class="perfil-circle">MC</div>
-        </div>
+    <!-- SIDEBAR -->
+    <div id="editor-sidebar"></div>
 
-    </nav>
+    <!-- MAIN DINÁMICO -->
+    <main id="contenido-dinamico" class="flex-grow-1 p-4">
+      <h4>Bienvenido Editor</h4>
+      <p>Seleccione una opción del menú</p>
+    </main>
 
-    <!-- CONTENIDO -->
-    <div class="d-flex">
+  </div>
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar p-3">
-
-            <h6>Eventos</h6>
-            <ul class="list-unstyled">
-                <li><a href="#" id="menu-crear">Crear Evento</a></li>
-                <li><a href="#" id="menu-publicados">Eventos Publicados</a></li>
-                <li><a href="#" id="menu-borrador">Eventos en Borrador</a></li>
-                <li><a href="#" id="menu-finalizados">Eventos Finalizados</a></li>
-            </ul>
-
-            <h6 class="mt-4">Usuarios</h6>
-            <ul class="list-unstyled">
-                <li><a href="#" id="menu-difusion">Crear lista de difusión</a></li>
-                <li><a href="#" id="menu-listas">Listas de difusión</a></li>
-                <li><a href="#" id="menu-suscriptores">Suscriptores</a></li>
-                <li><a href="#" id="menu-consultas">Consultas</a></li>
-            </ul>
-
-        </aside>
-
-        <!-- MAIN DINÁMICO -->
-        <main id="contenido-dinamico" class="flex-grow-1 p-4">
-
-            <h4>Bienvenido Editor</h4>
-            <p>Seleccione una opción del menú</p>
-
-        </main>
-
-    </div>
-
-    <!-- JS -->
-    <script src="js/editor.js"></script>
+  <!-- JS -->
+  <script src="js/load-components.js"></script>
+  <script src="js/editor.js"></script>
 
 </body>
 

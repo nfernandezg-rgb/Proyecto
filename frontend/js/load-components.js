@@ -193,3 +193,21 @@ document.addEventListener("click", (e) => {
   }
 
 });
+
+//editor-dashboard-componentes
+
+//TOPBAR EDITOR
+fetch("components/editor-topbar.html")
+  .then(res => res.text())
+  .then(data => {
+    const el = document.getElementById("editor-topbar");
+    if (el) el.innerHTML = data;
+  });
+
+// SIDEBAR EDITOR
+fetch("components/editor-sidebar.html")
+  .then(res => res.text())
+  .then(data => {
+    const el = document.getElementById("editor-sidebar");
+    if (el) el.innerHTML = data;
+  });
