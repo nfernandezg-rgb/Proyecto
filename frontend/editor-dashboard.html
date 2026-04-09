@@ -27,108 +27,8 @@
 
         <!-- MAIN DINÁMICO -->
         <main id="contenido-dinamico" class="flex-grow-1 p-4">
-            <h4 class="mb-4 text-center">Evento Nuevo</h4>
-
-            <!-- PASOS -->
-            <div class="text-center mb-4">
-                <span id="step1-indicator" class="badge bg-primary rounded-circle p-2">1</span>
-                <span id="step2-indicator" class="badge bg-secondary rounded-circle p-2">2</span>
-            </div>
-
-            <!-- FORM -->
-            <form id="form-evento">
-
-                <!-- ===================== -->
-                <!-- PASO 1 -->
-                <!-- ===================== -->
-                <div id="step-1">
-
-                    <h5 class="mb-3">Información del evento</h5>
-
-                    <!-- Nombre -->
-                    <div class="mb-3">
-                        <label class="form-label">Nombre del evento</label>
-                        <input type="text" class="form-control" id="nombre">
-                    </div>
-
-                    <!-- Fecha -->
-                    <div class="mb-3">
-                        <label class="form-label">Fecha del evento</label>
-                        <input type="date" class="form-control" id="fecha">
-                    </div>
-
-                    <!-- Horario -->
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label>Hora inicio</label>
-                            <input type="time" class="form-control" id="horaInicio">
-                        </div>
-                        <div class="col">
-                            <label>Hora fin</label>
-                            <input type="time" class="form-control" id="horaFin">
-                        </div>
-                    </div>
-
-                    <!-- Descripción -->
-                    <div class="mb-3">
-                        <label>Descripción</label>
-                        <textarea class="form-control" id="descripcion" rows="3"></textarea>
-                    </div>
-
-                    <!-- Objetivos -->
-                    <div class="mb-3">
-                        <label>Objetivos</label>
-                        <textarea class="form-control" id="objetivos" rows="3"></textarea>
-                    </div>
-
-                    <!-- Agenda -->
-                    <div class="mb-3">
-                        <label>Agenda / Programa</label>
-                        <textarea class="form-control" id="agenda" rows="3"></textarea>
-                    </div>
-
-                    <!-- Agenda fácil -->
-                    <div class="mb-3">
-                        <label>Agenda Lectura Fácil</label>
-                        <textarea class="form-control" id="agendaFacil" rows="3"></textarea>
-                    </div>
-
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">
-                        Siguiente →
-                    </button>
-
-                </div>
-
-                <!-- ===================== -->
-                <!-- PASO 2 -->
-                <!-- ===================== -->
-                <div id="step-2" style="display:none;">
-
-                    <h5 class="mb-3">Información adicional</h5>
-
-                    <!-- Público -->
-                    <div class="mb-3">
-                        <label>Público meta</label>
-                        <input type="text" class="form-control" id="publico">
-                    </div>
-
-                    <!-- Info adicional -->
-                    <div class="mb-3">
-                        <label>Información adicional</label>
-                        <textarea class="form-control" id="infoAdicional" rows="3"></textarea>
-                    </div>
-
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">
-                        ← Anterior
-                    </button>
-
-                    <button type="submit" class="btn btn-success">
-                        Enviar a aprobación
-                    </button>
-
-                </div>
-
-            </form>
+            <h4>Bienvenido Editor</h4>
+            <p>Seleccione una opción del menú</p>
         </main>
 
     </div>
@@ -136,6 +36,7 @@
     <!-- JS -->
     <script src="js/load-components.js"></script>
     <script src="js/editor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
