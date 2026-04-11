@@ -27,7 +27,19 @@ document.addEventListener("click", function (e) {
             });
     }
 
+    // EVENTOS BORRADOR (FIX)
+    if (e.target.closest("#menu-borrador")) {
+        e.preventDefault();
+
+        fetch("./components/eventos-borrador.html")
+            .then(res => res.text())
+            .then(html => {
+                contenedor.innerHTML = html;
+            });
+    }
+
 });
+
 
 // =============================
 // FORMULARIO MULTISTEP
@@ -47,6 +59,7 @@ function prevStep() {
     document.getElementById("step1-indicator").classList.replace("bg-secondary", "bg-primary");
     document.getElementById("step2-indicator").classList.replace("bg-primary", "bg-secondary");
 }
+
 
 // =============================
 // ENVÍO DE FORMULARIO
@@ -106,6 +119,43 @@ document.addEventListener("submit", function (e) {
             document.getElementById("form-evento").reset();
         });
 
+    }
+
+});
+
+
+// =============================
+// CAMBIO DE TABS (pendientes / rechazados)
+// =============================
+document.addEventListener("click", function (e) {
+
+    const pendientesBtn = document.getElementById("tab-pendientes");
+    const rechazadosBtn = document.getElementById("tab-rechazados");
+
+    if (e.target.id === "tab-pendientes") {
+
+        pendientesBtn?.classList.add("active");
+        rechazadosBtn?.classList.remove("active");
+
+        document.getElementById("lista-eventos-editor").innerHTML = `
+            <div class="text-center py-5">
+                <h6>No hay eventos pendientes</h6>
+                <p class="text-muted">Pendientes de aprobación del administrador</p>
+            </div>
+        `;
+    }
+
+    if (e.target.id === "tab-rechazados") {
+
+        rechazadosBtn?.classList.add("active");
+        pendientesBtn?.classList.remove("active");
+
+        document.getElementById("lista-eventos-editor").innerHTML = `
+            <div class="text-center py-5">
+                <h6>No hay eventos rechazados</h6>
+                <p class="text-muted">Eventos rechazados por el administrador</p>
+            </div>
+        `;
     }
 
 });
