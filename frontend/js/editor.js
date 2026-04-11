@@ -159,3 +159,20 @@ document.addEventListener("click", function (e) {
     }
 
 });
+
+// =============================
+// VER DETALLE EVENTO (FUTURO MODAL)
+// =============================
+document.addEventListener("click", function (e) {
+
+    if (e.target.closest(".ver-evento")) {
+
+        console.log("Aquí se abrirá el modal con info del evento");
+
+        // FUTURO:
+        // 1. Obtener ID del evento
+        // 2. Llamar backend
+        // 3. Mostrar modal
+    }
+
+});
