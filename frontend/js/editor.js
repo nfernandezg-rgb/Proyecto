@@ -1,10 +1,15 @@
+// =============================
+// NAVEGACIÓN DINÁMICA (SIDEBAR)
+// =============================
 document.addEventListener("click", function (e) {
 
     const contenedor = document.getElementById("contenido-dinamico");
 
     // CREAR EVENTO
-    if (e.target.id === "menu-crear") {
-        fetch("components/form-crear-evento.html")
+    if (e.target.closest("#menu-crear")) {
+        e.preventDefault();
+
+        fetch("./components/form-crear-evento.html")
             .then(res => res.text())
             .then(html => {
                 contenedor.innerHTML = html;
@@ -12,17 +17,21 @@ document.addEventListener("click", function (e) {
     }
 
     // EVENTOS PUBLICADOS
-    if (e.target.id === "menu-publicados") {
-        contenedor.innerHTML = `
-            <h4>Eventos Publicados</h4>
-            <p>Aquí se mostrarán los eventos desde el backend</p>
-        `;
+    if (e.target.closest("#menu-publicados")) {
+        e.preventDefault();
+
+        fetch("./components/eventos-publicados.html")
+            .then(res => res.text())
+            .then(html => {
+                contenedor.innerHTML = html;
+            });
     }
 
 });
 
-
-// FORM MULTISTEP
+// =============================
+// FORMULARIO MULTISTEP
+// =============================
 function nextStep() {
     document.getElementById("step-1").style.display = "none";
     document.getElementById("step-2").style.display = "block";
@@ -39,9 +48,11 @@ function prevStep() {
     document.getElementById("step2-indicator").classList.replace("bg-primary", "bg-secondary");
 }
 
-
-// CAPTURA DATOS
+// =============================
+// ENVÍO DE FORMULARIO
+// =============================
 document.addEventListener("submit", function (e) {
+
     if (e.target.id === "form-evento") {
 
         e.preventDefault();
@@ -60,7 +71,7 @@ document.addEventListener("submit", function (e) {
             estado: "pendiente"
         };
 
-        // :red_circle: VALIDACIÓN (campos obligatorios)
+        // VALIDACIÓN
         if (
             !evento.nombre ||
             !evento.fecha ||
@@ -82,19 +93,19 @@ document.addEventListener("submit", function (e) {
             return;
         }
 
-        //  LOG  (sirve para backend luego)
+        // DEBUG (para backend luego)
         console.log("Evento listo para backend:", evento);
 
-        //  ALERTA DE ÉXITO
+        // ÉXITO
         Swal.fire({
             icon: 'success',
             title: 'Evento Enviado',
             text: 'El evento fue enviado al administrador para aprobación.',
             confirmButtonText: 'Continuar'
         }).then(() => {
-            // limpiar form
             document.getElementById("form-evento").reset();
         });
 
     }
+
 });
