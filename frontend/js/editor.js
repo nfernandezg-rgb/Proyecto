@@ -49,6 +49,17 @@ document.addEventListener("click", function (e) {
             });
     }
 
+    // INSCRIPCIONES
+    if (e.target.closest("#menu-inscripciones")) {
+        e.preventDefault();
+
+        fetch("./components/inscripciones-evento.html")
+            .then(res => res.text())
+            .then(html => {
+                contenedor.innerHTML = html;
+            });
+    }
+
 });
 
 
@@ -235,6 +246,23 @@ document.addEventListener("click", function (e) {
         const modal = bootstrap.Modal.getInstance(document.getElementById("modalRespuesta"));
         modal.hide();
 
+    }
+
+});
+
+
+// =============================
+// VER INSCRITOS (FUTURO)
+// =============================
+document.addEventListener("click", function (e) {
+
+    if (e.target.closest(".ver-inscritos")) {
+
+        console.log("Aquí se mostrarán los usuarios inscritos");
+
+        // FUTURO:
+        // fetch inscritos por evento
+        // mostrar lista o nueva vista
     }
 
 });
