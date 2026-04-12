@@ -2,7 +2,10 @@ document.addEventListener("click", function (e) {
 
     const contenedor = document.getElementById("contenido-admin");
 
-    // APROBACIÓN DE EVENTOS
+    // =============================
+    // NAVEGACIÓN ADMIN
+    // =============================
+
     if (e.target.closest("#admin-aprobar")) {
         e.preventDefault();
 
@@ -13,7 +16,6 @@ document.addEventListener("click", function (e) {
             });
     }
 
-    // EVENTOS PUBLICADOS
     if (e.target.closest("#admin-publicados")) {
         e.preventDefault();
 
@@ -24,33 +26,39 @@ document.addEventListener("click", function (e) {
             });
     }
 
-});
-
-
-// =============================
-// ACCIONES ADMIN (BOTONES)
-// =============================
-document.addEventListener("click", function (e) {
+    // =============================
+    // ACCIONES SOBRE EVENTOS
+    // =============================
 
     const card = e.target.closest("[data-id]");
     if (!card) return;
 
     const eventoId = card.getAttribute("data-id");
 
-    // VER
+    //  VER DETALLE (MODAL)
     if (e.target.closest(".btn-ver")) {
-        console.log("Ver evento:", eventoId);
 
-        // FUTURO
-        // fetch(`/api/eventos/${eventoId}`)
+        console.log("Ver detalle evento:", eventoId);
+
+        fetch("./components/detalle-evento.html")
+            .then(res => res.text())
+            .then(html => {
+
+                document.getElementById("contenido-detalle-evento").innerHTML = html;
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById('modalDetalleEvento')
+                );
+
+                modal.show();
+
+            })
+            .catch(err => console.error("Error cargando detalle:", err));
     }
 
     // EDITAR
     if (e.target.closest(".btn-editar")) {
         console.log("Editar evento:", eventoId);
-
-        // FUTURO
-        // window.location.href = `/editar-evento/${eventoId}`
     }
 
     // ELIMINAR
@@ -67,20 +75,12 @@ document.addEventListener("click", function (e) {
 
             if (result.isConfirmed) {
                 console.log("Eliminar evento:", eventoId);
-
-                // FUTURO BACKEND
-                /*
-                fetch(`/api/eventos/${eventoId}`, {
-                    method: "DELETE"
-                })
-                */
             }
 
         });
-
     }
 
-    // APROBAR
+    //  APROBAR
     if (e.target.closest(".btn-aprobar")) {
 
         Swal.fire({
@@ -92,10 +92,11 @@ document.addEventListener("click", function (e) {
 
             if (result.isConfirmed) {
                 console.log("Aprobar evento:", eventoId);
+
+                Swal.fire("Aprobado", "El evento fue publicado", "success");
             }
 
         });
-
     }
 
     // RECHAZAR
@@ -116,7 +117,6 @@ document.addEventListener("click", function (e) {
             }
 
         });
-
     }
 
 });
