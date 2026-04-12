@@ -96,3 +96,16 @@ document.addEventListener("click", (e) => {
   }
 
 });
+
+
+// =============================
+// ADMIN-COMPONENT
+// =============================
+
+// SIDEBAR ADMIN
+fetch("components/admin-sidebar.html")
+  .then(res => res.text())
+  .then(data => {
+    const el = document.getElementById("admin-sidebar");
+    if (el) el.innerHTML = data;
+  });
