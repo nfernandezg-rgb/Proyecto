@@ -27,11 +27,22 @@ document.addEventListener("click", function (e) {
             });
     }
 
-    // EVENTOS BORRADOR (FIX)
+    // EVENTOS BORRADOR 
     if (e.target.closest("#menu-borrador")) {
         e.preventDefault();
 
         fetch("./components/eventos-borrador.html")
+            .then(res => res.text())
+            .then(html => {
+                contenedor.innerHTML = html;
+            });
+    }
+
+    //CONSULTAS
+    if (e.target.closest("#menu-consultas")) {
+        e.preventDefault();
+
+        fetch("./components/consultas-editor.html")
             .then(res => res.text())
             .then(html => {
                 contenedor.innerHTML = html;
@@ -173,6 +184,57 @@ document.addEventListener("click", function (e) {
         // 1. Obtener ID del evento
         // 2. Llamar backend
         // 3. Mostrar modal
+    }
+
+});
+
+
+// =============================
+// RESPONDER CONSULTA (FUTURO)
+// =============================
+
+document.addEventListener("click", function (e) {
+
+    if (e.target.closest(".responder-consulta")) {
+
+        const modal = new bootstrap.Modal(document.getElementById("modalRespuesta"));
+        modal.show();
+
+    }
+
+});
+
+
+
+// =============================
+// modal de responder consulta
+// =============================
+document.addEventListener("click", function (e) {
+
+    if (e.target.id === "btnEnviarRespuesta") {
+
+        const texto = document.getElementById("respuestaTexto").value;
+
+        if (!texto.trim()) {
+            Swal.fire({
+                icon: "error",
+                title: "Campo vacío",
+                text: "Debe escribir una respuesta"
+            });
+            return;
+        }
+
+        Swal.fire({
+            icon: "success",
+            title: "Respuesta enviada",
+            text: "La respuesta fue registrada correctamente"
+        });
+
+        document.getElementById("respuestaTexto").value = "";
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById("modalRespuesta"));
+        modal.hide();
+
     }
 
 });
