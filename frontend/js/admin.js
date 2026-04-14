@@ -85,38 +85,93 @@ document.addEventListener("click", function (e) {
 
         Swal.fire({
             title: "¿Aprobar evento?",
+            text: "El evento será publicado",
             icon: "question",
             showCancelButton: true,
-            confirmButtonText: "Sí, aprobar"
+            confirmButtonText: "Sí, aprobar",
+            cancelButtonText: "Cancelar"
         }).then((result) => {
 
             if (result.isConfirmed) {
+
                 console.log("Aprobar evento:", eventoId);
 
-                Swal.fire("Aprobado", "El evento fue publicado", "success");
+                // SEGUNDO MODAL (el de tu mockup)
+                Swal.fire({
+                    icon: "success",
+                    title: "Evento Publicado",
+                    text: "Se publicó con éxito el evento seleccionado. Para modificar o eliminar este evento puede realizarlo en la sección del menú principal en Eventos Publicados.",
+                    confirmButtonText: "Continuar"
+                });
+
+                // FUTURO BACKEND:
+                /*
+                fetch(`/api/eventos/${eventoId}/aprobar`, {
+                    method: "POST"
+                })
+                */
             }
 
         });
+
     }
 
     // RECHAZAR
+
     if (e.target.closest(".btn-rechazar")) {
 
-        Swal.fire({
-            title: "¿Rechazar evento?",
-            text: "El evento no será publicado",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, rechazar"
-        }).then((result) => {
+        const card = e.target.closest("[data-id]");
+        const eventoId = card.getAttribute("data-id");
 
-            if (result.isConfirmed) {
-                console.log("Rechazado:", eventoId);
+        // guardar temporalmente el ID
+        window.eventoRechazoId = eventoId;
 
-                Swal.fire("Rechazado", "El evento fue rechazado", "success");
+        const modal = new bootstrap.Modal(
+            document.getElementById('modalRechazoEvento')
+        );
+        modal.show();
+    }
+
+    // CONFIRMAR RECHAZO
+    document.addEventListener("click", function (e) {
+
+        if (e.target.id === "btnConfirmarRechazo") {
+
+            const motivo = document.getElementById("motivoRechazo").value;
+
+            if (!motivo.trim()) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Campo requerido",
+                    text: "Debe ingresar el motivo del rechazo"
+                });
+                return;
             }
 
-        });
-    }
+            console.log("Evento rechazado:", window.eventoRechazoId);
+            console.log("Motivo:", motivo);
+
+            // FUTURO BACKEND
+            /*
+            fetch(`/api/eventos/${window.eventoRechazoId}/rechazar`, {
+                method: "POST",
+                body: JSON.stringify({ motivo }),
+                headers: { "Content-Type": "application/json" }
+            })
+            */
+
+            Swal.fire("Rechazado", "El evento fue rechazado correctamente", "success");
+
+            // limpiar
+            document.getElementById("motivoRechazo").value = "";
+
+            // cerrar modal
+            const modal = bootstrap.Modal.getInstance(
+                document.getElementById('modalRechazoEvento')
+            );
+            modal.hide();
+        }
+
+    });
 
 });
