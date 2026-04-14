@@ -1,9 +1,12 @@
+// =============================
+// Eventos globales por click
+// =============================
 document.addEventListener("click", function (e) {
 
     const contenedor = document.getElementById("contenido-admin");
 
     // =============================
-    // NAVEGACIÓN ADMIN
+    // Navegacion de admin dashboard
     // =============================
 
     if (e.target.closest("#admin-aprobar")) {
@@ -14,6 +17,7 @@ document.addEventListener("click", function (e) {
             .then(html => {
                 contenedor.innerHTML = html;
             });
+        return;
     }
 
     if (e.target.closest("#admin-publicados")) {
@@ -24,10 +28,11 @@ document.addEventListener("click", function (e) {
             .then(html => {
                 contenedor.innerHTML = html;
             });
+        return;
     }
 
     // =============================
-    // ACCIONES SOBRE EVENTOS
+    // Acciones en los eventos
     // =============================
 
     const card = e.target.closest("[data-id]");
@@ -35,7 +40,7 @@ document.addEventListener("click", function (e) {
 
     const eventoId = card.getAttribute("data-id");
 
-    //  VER DETALLE (MODAL)
+    // Ver detalles
     if (e.target.closest(".btn-ver")) {
 
         console.log("Ver detalle evento:", eventoId);
@@ -56,12 +61,12 @@ document.addEventListener("click", function (e) {
             .catch(err => console.error("Error cargando detalle:", err));
     }
 
-    // EDITAR
+    // Editar
     if (e.target.closest(".btn-editar")) {
         console.log("Editar evento:", eventoId);
     }
 
-    // ELIMINAR
+    // Eliminar
     if (e.target.closest(".btn-eliminar")) {
 
         Swal.fire({
@@ -80,7 +85,7 @@ document.addEventListener("click", function (e) {
         });
     }
 
-    //  APROBAR
+    // Aprobar
     if (e.target.closest(".btn-aprobar")) {
 
         Swal.fire({
@@ -96,7 +101,6 @@ document.addEventListener("click", function (e) {
 
                 console.log("Aprobar evento:", eventoId);
 
-                // SEGUNDO MODAL (el de tu mockup)
                 Swal.fire({
                     icon: "success",
                     title: "Evento Publicado",
@@ -104,26 +108,14 @@ document.addEventListener("click", function (e) {
                     confirmButtonText: "Continuar"
                 });
 
-                // FUTURO BACKEND:
-                /*
-                fetch(`/api/eventos/${eventoId}/aprobar`, {
-                    method: "POST"
-                })
-                */
             }
 
         });
-
     }
 
-    // RECHAZAR
-
+    // Rechazar (modal se abre)
     if (e.target.closest(".btn-rechazar")) {
 
-        const card = e.target.closest("[data-id]");
-        const eventoId = card.getAttribute("data-id");
-
-        // guardar temporalmente el ID
         window.eventoRechazoId = eventoId;
 
         const modal = new bootstrap.Modal(
@@ -132,46 +124,38 @@ document.addEventListener("click", function (e) {
         modal.show();
     }
 
-    // CONFIRMAR RECHAZO
-    document.addEventListener("click", function (e) {
+});
 
-        if (e.target.id === "btnConfirmarRechazo") {
 
-            const motivo = document.getElementById("motivoRechazo").value;
+// =============================
+// Confirmar rechazo de evento (fuera del listener anterior)
+// =============================
+document.addEventListener("click", function (e) {
 
-            if (!motivo.trim()) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Campo requerido",
-                    text: "Debe ingresar el motivo del rechazo"
-                });
-                return;
-            }
+    if (e.target.id === "btnConfirmarRechazo") {
 
-            console.log("Evento rechazado:", window.eventoRechazoId);
-            console.log("Motivo:", motivo);
+        const motivo = document.getElementById("motivoRechazo").value;
 
-            // FUTURO BACKEND
-            /*
-            fetch(`/api/eventos/${window.eventoRechazoId}/rechazar`, {
-                method: "POST",
-                body: JSON.stringify({ motivo }),
-                headers: { "Content-Type": "application/json" }
-            })
-            */
-
-            Swal.fire("Rechazado", "El evento fue rechazado correctamente", "success");
-
-            // limpiar
-            document.getElementById("motivoRechazo").value = "";
-
-            // cerrar modal
-            const modal = bootstrap.Modal.getInstance(
-                document.getElementById('modalRechazoEvento')
-            );
-            modal.hide();
+        if (!motivo.trim()) {
+            Swal.fire({
+                icon: "error",
+                title: "Campo requerido",
+                text: "Debe ingresar el motivo del rechazo"
+            });
+            return;
         }
 
-    });
+        console.log("Evento rechazado:", window.eventoRechazoId);
+        console.log("Motivo:", motivo);
+
+        Swal.fire("Rechazado", "El evento fue rechazado correctamente", "success");
+
+        document.getElementById("motivoRechazo").value = "";
+
+        const modal = bootstrap.Modal.getInstance(
+            document.getElementById('modalRechazoEvento')
+        );
+        modal.hide();
+    }
 
 });
