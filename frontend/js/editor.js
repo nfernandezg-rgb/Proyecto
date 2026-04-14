@@ -27,7 +27,7 @@ document.addEventListener("click", function (e) {
             });
     }
 
-    // EVENTOS BORRADOR 
+    // EVENTOS BORRADOR
     if (e.target.closest("#menu-borrador")) {
         e.preventDefault();
 
@@ -38,7 +38,7 @@ document.addEventListener("click", function (e) {
             });
     }
 
-    //CONSULTAS
+    // CONSULTAS
     if (e.target.closest("#menu-consultas")) {
         e.preventDefault();
 
@@ -106,7 +106,6 @@ document.addEventListener("submit", function (e) {
             estado: "pendiente"
         };
 
-        // VALIDACIÓN
         if (
             !evento.nombre ||
             !evento.fecha ||
@@ -128,10 +127,8 @@ document.addEventListener("submit", function (e) {
             return;
         }
 
-        // DEBUG (para backend luego)
         console.log("Evento listo para backend:", evento);
 
-        // ÉXITO
         Swal.fire({
             icon: 'success',
             title: 'Evento Enviado',
@@ -147,14 +144,15 @@ document.addEventListener("submit", function (e) {
 
 
 // =============================
-// CAMBIO DE TABS (pendientes / rechazados)
+// CAMBIO DE TABS (FIX :fire:)
 // =============================
 document.addEventListener("click", function (e) {
 
     const pendientesBtn = document.getElementById("tab-pendientes");
     const rechazadosBtn = document.getElementById("tab-rechazados");
 
-    if (e.target.id === "tab-pendientes") {
+    // :large_blue_circle: PENDIENTES
+    if (e.target.closest("#tab-pendientes")) {
 
         pendientesBtn?.classList.add("active");
         rechazadosBtn?.classList.remove("active");
@@ -167,102 +165,80 @@ document.addEventListener("click", function (e) {
         `;
     }
 
-    if (e.target.id === "tab-rechazados") {
+    // :red_circle: RECHAZADOS
+    if (e.target.closest("#tab-rechazados")) {
 
         rechazadosBtn?.classList.add("active");
         pendientesBtn?.classList.remove("active");
 
         document.getElementById("lista-eventos-editor").innerHTML = `
-            <div class="text-center py-5">
-                <h6>No hay eventos rechazados</h6>
-                <p class="text-muted">Eventos rechazados por el administrador</p>
+
+        <div class="border-bottom py-3 d-flex justify-content-between align-items-center" data-id="1">
+
+            <div>
+                <strong>Título del evento</strong><br>
+                <small>Fecha de creación: 22/08/2020</small><br>
+                <small>Estado: Rechazado</small>
             </div>
+
+            <div class="d-flex gap-2">
+
+                <button class="btn btn-outline-secondary btn-sm btn-anotaciones">
+                    Ver anotaciones
+                </button>
+
+                <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
+                    <i class="bi bi-trash"></i>
+                </button>
+
+            </div>
+
+        </div>
+
         `;
     }
 
 });
 
+
 // =============================
-// VER DETALLE EVENTO (FUTURO MODAL)
+// EVENTOS RECHAZADOS
 // =============================
 document.addEventListener("click", function (e) {
 
-    if (e.target.closest(".ver-evento")) {
+    const card = e.target.closest("[data-id]");
+    if (!card) return;
 
-        console.log("Aquí se abrirá el modal con info del evento");
+    const eventoId = card.getAttribute("data-id");
 
-        // FUTURO:
-        // 1. Obtener ID del evento
-        // 2. Llamar backend
-        // 3. Mostrar modal
-    }
+    if (e.target.closest(".btn-anotaciones")) {
 
-});
+        const motivo = "Este evento fue rechazado porque la información estaba incompleta.";
 
+        document.getElementById("texto-anotacion").textContent = motivo;
 
-// =============================
-// RESPONDER CONSULTA (FUTURO)
-// =============================
-
-document.addEventListener("click", function (e) {
-
-    if (e.target.closest(".responder-consulta")) {
-
-        const modal = new bootstrap.Modal(document.getElementById("modalRespuesta"));
+        const modal = new bootstrap.Modal(
+            document.getElementById("modalAnotaciones")
+        );
         modal.show();
-
     }
 
-});
-
-
-
-// =============================
-// modal de responder consulta
-// =============================
-document.addEventListener("click", function (e) {
-
-    if (e.target.id === "btnEnviarRespuesta") {
-
-        const texto = document.getElementById("respuestaTexto").value;
-
-        if (!texto.trim()) {
-            Swal.fire({
-                icon: "error",
-                title: "Campo vacío",
-                text: "Debe escribir una respuesta"
-            });
-            return;
-        }
+    if (e.target.closest(".btn-eliminar-evento")) {
 
         Swal.fire({
-            icon: "success",
-            title: "Respuesta enviada",
-            text: "La respuesta fue registrada correctamente"
+            title: "¿Eliminar evento?",
+            text: "Se eliminará de la lista de rechazados",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, eliminar"
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                card.remove();
+            }
+
         });
 
-        document.getElementById("respuestaTexto").value = "";
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById("modalRespuesta"));
-        modal.hide();
-
-    }
-
-});
-
-
-// =============================
-// VER INSCRITOS (FUTURO)
-// =============================
-document.addEventListener("click", function (e) {
-
-    if (e.target.closest(".ver-inscritos")) {
-
-        console.log("Aquí se mostrarán los usuarios inscritos");
-
-        // FUTURO:
-        // fetch inscritos por evento
-        // mostrar lista o nueva vista
     }
 
 });
