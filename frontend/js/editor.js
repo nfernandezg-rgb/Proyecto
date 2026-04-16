@@ -216,7 +216,37 @@ document.addEventListener("submit", function (e) {
             return;
         }
 
-        console.log("Evento listo para backend:", evento);
+        fetch("http://localhost:3000/eventos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(evento)
+        })
+            .then(res => res.json())
+            .then(data => {
+
+                console.log("Evento guardado:", data);
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Evento Enviado',
+                    text: 'El evento fue enviado al administrador para aprobación.',
+                    confirmButtonText: 'Continuar'
+                }).then(() => {
+                    document.getElementById("form-evento").reset();
+                });
+
+            })
+            .catch(error => {
+                console.error("Error:", error);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo guardar el evento'
+                });
+            });
 
         Swal.fire({
             icon: 'success',
