@@ -1,292 +1,210 @@
 // =============================
-// Eventos globales por click
+// EVENTOS GLOBALES (CLICK)
 // =============================
-document.addEventListener("click", function (e) {
+document.addEventListener("click", async function (e) {
 
     const contenedor = document.getElementById("contenido-dinamico");
 
     // =============================
-    // Navegacion en sidebar
+    // NAVEGACIÓN
     // =============================
 
     if (e.target.closest("#menu-crear")) {
         e.preventDefault();
-
-        fetch("./components/form-crear-evento.html")
-            .then(res => res.text())
-            .then(html => {
-                contenedor.innerHTML = html;
-            });
+        cargarVista("./components/form-crear-evento.html");
     }
 
     if (e.target.closest("#menu-publicados")) {
         e.preventDefault();
-
-        fetch("./components/eventos-publicados.html")
-            .then(res => res.text())
-            .then(html => {
-                contenedor.innerHTML = html;
-
-                setTimeout(() => {
-                    cargarEventosPublicadosEditor();
-                }, 100);
-            });
+        cargarVista("./components/eventos-publicados.html", cargarEventosPublicadosEditor);
     }
 
     if (e.target.closest("#menu-borrador")) {
         e.preventDefault();
-
-        fetch("./components/eventos-borrador.html")
-            .then(res => res.text())
-            .then(html => {
-                contenedor.innerHTML = html;
-
-                // IMPORTANTE
-                setTimeout(() => {
-                    cargarEventos("pendiente");
-                }, 100);
-            });
+        cargarVista("./components/eventos-borrador.html", () => cargarEventos("pendiente"));
     }
 
     if (e.target.closest("#menu-consultas")) {
         e.preventDefault();
-
-        fetch("./components/consultas-editor.html")
-            .then(res => res.text())
-            .then(html => {
-                contenedor.innerHTML = html;
-            });
+        cargarVista("./components/consultas-editor.html");
     }
 
     if (e.target.closest("#menu-inscripciones")) {
         e.preventDefault();
-
-        fetch("./components/inscripciones-evento.html")
-            .then(res => res.text())
-            .then(html => {
-                contenedor.innerHTML = html;
-            });
+        cargarVista("./components/inscripciones-evento.html");
     }
 
+    // =============================
+    // TABS (pendientes / rechazados)
+    // =============================
+
+    if (e.target.closest("#tab-pendientes")) {
+        toggleTabs("pendiente");
+    }
+
+    if (e.target.closest("#tab-rechazados")) {
+        toggleTabs("rechazado");
+    }
 
     // =============================
-    // Eventos rechazados
+    // ACCIONES EN EVENTOS
     // =============================
 
     const card = e.target.closest("[data-id]");
-    if (card) {
+    if (!card) return;
 
-        const eventoId = card.getAttribute("data-id");
+    const eventoId = card.getAttribute("data-id");
 
-        if (e.target.closest(".btn-anotaciones")) {
+    // VER ANOTACIONES
+    if (e.target.closest(".btn-anotaciones")) {
+        mostrarAnotaciones(eventoId);
+    }
 
-            const eventoId = e.target.closest("[data-id]").getAttribute("data-id");
-
-            fetch("http://localhost:3000/eventos")
-                .then(res => res.json())
-                .then(eventos => {
-
-                    const evento = eventos.find(e => e._id === eventoId);
-
-                    const motivo = evento?.motivoRechazo || "No hay anotaciones";
-
-                    document.getElementById("texto-anotacion").textContent = motivo;
-
-                    const modal = new bootstrap.Modal(
-                        document.getElementById("modalAnotaciones")
-                    );
-                    modal.show();
-
-                })
-                .catch(err => console.error(err));
-        }
-
-        if (e.target.closest(".btn-eliminar-evento")) {
-
-            const eventoId = e.target.closest("[data-id]").getAttribute("data-id");
-
-            Swal.fire({
-                title: "¿Eliminar evento?",
-                text: "Se eliminará permanentemente",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Sí, eliminar"
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-
-                    fetch(`http://localhost:3000/eventos/${eventoId}`, {
-                        method: "DELETE"
-                    })
-                        .then(res => res.json())
-                        .then(() => {
-
-                            Swal.fire({
-                                icon: "success",
-                                title: "Eliminado",
-                                text: "El evento fue eliminado correctamente"
-                            });
-
-                            // refrescar lista
-                            setTimeout(() => {
-                                cargarEventos("rechazado");
-                            }, 500);
-
-                        })
-                        .catch(err => console.error(err));
-
-                }
-
-            });
-        }
-
+    // ELIMINAR
+    if (e.target.closest(".btn-eliminar-evento")) {
+        eliminarEvento(eventoId);
     }
 
 });
 
+
 // =============================
-// eventos en borrador
+// FUNCIONES AUXILIARES
 // =============================
 
-document.addEventListener("click", function (e) {
+function cargarVista(ruta, callback = null) {
+    fetch(ruta)
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById("contenido-dinamico").innerHTML = html;
 
+            if (callback) {
+                setTimeout(callback, 100);
+            }
+        });
+}
+
+function toggleTabs(tipo) {
     const pendientesBtn = document.getElementById("tab-pendientes");
     const rechazadosBtn = document.getElementById("tab-rechazados");
 
-    // PENDIENTES
-    if (e.target.closest("#tab-pendientes")) {
-
+    if (tipo === "pendiente") {
         pendientesBtn?.classList.add("active");
         rechazadosBtn?.classList.remove("active");
-
-        cargarEventos("pendiente"); // clave
-    }
-
-    // RECHAZADOS
-    if (e.target.closest("#tab-rechazados")) {
-
+    } else {
         rechazadosBtn?.classList.add("active");
         pendientesBtn?.classList.remove("active");
-
-        cargarEventos("rechazado"); // clave
     }
 
-});
-
-// ========================================
-// Formulario multi paso para crear evento
-// =======================================
-function nextStep() {
-    document.getElementById("step-1").style.display = "none";
-    document.getElementById("step-2").style.display = "block";
-
-    document.getElementById("step1-indicator").classList.replace("bg-primary", "bg-secondary");
-    document.getElementById("step2-indicator").classList.replace("bg-secondary", "bg-primary");
-}
-
-function prevStep() {
-    document.getElementById("step-1").style.display = "block";
-    document.getElementById("step-2").style.display = "none";
-
-    document.getElementById("step1-indicator").classList.replace("bg-secondary", "bg-primary");
-    document.getElementById("step2-indicator").classList.replace("bg-primary", "bg-secondary");
+    cargarEventos(tipo);
 }
 
 
-// ==================================
-// Envio del formulario crear evento
-// =================================
-document.addEventListener("submit", function (e) {
+// =============================
+// ANOTACIONES
+// =============================
+async function mostrarAnotaciones(eventoId) {
 
-    if (e.target.id === "form-evento") {
+    try {
+        const res = await fetch("http://localhost:3000/eventos");
+        const eventos = await res.json();
 
-        e.preventDefault();
+        const evento = eventos.find(e => e._id === eventoId);
+        const motivo = evento?.motivoRechazo || "No hay anotaciones";
 
-        const evento = {
-            nombre: document.getElementById("nombre").value,
-            fecha: document.getElementById("fecha").value,
-            horaInicio: document.getElementById("horaInicio").value,
-            horaFin: document.getElementById("horaFin").value,
-            descripcion: document.getElementById("descripcion").value,
-            objetivos: document.getElementById("objetivos").value,
-            agenda: document.getElementById("agenda").value,
-            agendaFacil: document.getElementById("agendaFacil").value,
-            publico: document.getElementById("publico").value,
-            infoAdicional: document.getElementById("infoAdicional").value,
-            estado: "pendiente"
-        };
+        document.getElementById("texto-anotacion").textContent = motivo;
 
-        if (
-            !evento.nombre ||
-            !evento.fecha ||
-            !evento.horaInicio ||
-            !evento.horaFin ||
-            !evento.descripcion ||
-            !evento.objetivos ||
-            !evento.agenda ||
-            !evento.agendaFacil ||
-            !evento.publico ||
-            !evento.infoAdicional
-        ) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Evento Incompleto',
-                text: 'Hay campos obligatorios que no han sido completados.',
-                confirmButtonText: 'Continuar'
-            });
-            return;
+        new bootstrap.Modal(
+            document.getElementById("modalAnotaciones")
+        ).show();
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+// =============================
+// ELIMINAR EVENTO
+// =============================
+function eliminarEvento(eventoId) {
+
+    Swal.fire({
+        title: "¿Eliminar evento?",
+        text: "Se eliminará permanentemente",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar"
+    }).then(async (result) => {
+
+        if (result.isConfirmed) {
+
+            try {
+                await fetch(`http://localhost:3000/eventos/${eventoId}`, {
+                    method: "DELETE"
+                });
+
+                Swal.fire("Eliminado", "Evento eliminado correctamente", "success");
+
+                setTimeout(() => cargarEventos("rechazado"), 500);
+
+            } catch (error) {
+                console.error(error);
+            }
         }
+    });
+}
 
-        fetch("http://localhost:3000/eventos", {
+
+// =============================
+// FORMULARIO EVENTO
+// =============================
+document.addEventListener("submit", async function (e) {
+
+    if (e.target.id !== "form-evento") return;
+
+    e.preventDefault();
+
+    const evento = {
+        nombre: nombre.value,
+        fecha: fecha.value,
+        horaInicio: horaInicio.value,
+        horaFin: horaFin.value,
+        descripcion: descripcion.value,
+        objetivos: objetivos.value,
+        agenda: agenda.value,
+        agendaFacil: agendaFacil.value,
+        publico: publico.value,
+        infoAdicional: infoAdicional.value,
+        estado: "pendiente"
+    };
+
+    if (Object.values(evento).some(v => !v)) {
+        Swal.fire("Error", "Faltan campos obligatorios", "error");
+        return;
+    }
+
+    try {
+        await fetch("http://localhost:3000/eventos", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(evento)
-        })
-            .then(res => res.json())
-            .then(data => {
-
-                console.log("Evento guardado:", data);
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Evento Enviado',
-                    text: 'El evento fue enviado al administrador para aprobación.',
-                    confirmButtonText: 'Continuar'
-                }).then(() => {
-                    document.getElementById("form-evento").reset();
-                });
-
-            })
-            .catch(error => {
-                console.error("Error:", error);
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'No se pudo guardar el evento'
-                });
-            });
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Evento Enviado',
-            text: 'El evento fue enviado al administrador para aprobación.',
-            confirmButtonText: 'Continuar'
-        }).then(() => {
-            document.getElementById("form-evento").reset();
         });
 
-    }
+        Swal.fire("Éxito", "Evento enviado a aprobación", "success");
 
+        e.target.reset();
+
+    } catch (error) {
+        console.error(error);
+        Swal.fire("Error", "No se pudo guardar", "error");
+    }
 });
 
 
-
-// ==================================
-// Funcion para cargar eventos pendientes 
-// =================================
+// =============================
+// CARGAR EVENTOS (pendiente/rechazado)
+// =============================
 async function cargarEventos(filtroEstado = null) {
 
     try {
@@ -296,72 +214,53 @@ async function cargarEventos(filtroEstado = null) {
         const contenedor = document.getElementById("lista-eventos-editor");
         if (!contenedor) return;
 
-        // FILTRAR POR ESTADO
-        const eventosFiltrados = filtroEstado
+        const filtrados = filtroEstado
             ? eventos.filter(e => e.estado === filtroEstado)
             : eventos;
 
-        if (eventosFiltrados.length === 0) {
-            contenedor.innerHTML = `
-                <div class="text-center py-5">
-                    <h6>No hay eventos</h6>
-                </div>
-            `;
+        if (filtrados.length === 0) {
+            contenedor.innerHTML = `<div class="text-center py-5"><h6>No hay eventos</h6></div>`;
             return;
         }
 
         contenedor.innerHTML = "";
 
-        eventosFiltrados.forEach(evento => {
+        filtrados.forEach(evento => {
 
-            let botones = "";
-
-            // :point_down: SI ES RECHAZADO
-            if (evento.estado === "rechazado") {
-                botones = `
-             <button class="btn btn-outline-secondary btn-sm btn-anotaciones">
-                 Ver anotaciones
-             </button>
-
-            <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
-                <i class="bi bi-trash"></i>
-            </button>
-    `;
-            } else {
-                // :point_down: SI ES PENDIENTE
-                botones = `
-        <button class="btn btn-outline-secondary btn-sm ver-evento">
-            <i class="bi bi-eye"></i>
-        </button>
-    `;
-            }
+            const botones = evento.estado === "rechazado"
+                ? `
+                    <button class="btn btn-outline-secondary btn-sm btn-anotaciones">Ver anotaciones</button>
+                    <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                  `
+                : `
+                    <button class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                  `;
 
             contenedor.innerHTML += `
-<div class="border-bottom py-3 d-flex justify-content-between align-items-center" data-id="${evento._id}">
-
-    <div>
-        <strong>${evento.nombre}</strong><br>
-        <small>Fecha: ${evento.fecha}</small><br>
-        <small>Estado: ${evento.estado}</small>
-    </div>
-
-    <div class="d-flex gap-2">
-        ${botones}
-    </div>
-
-</div>
-`;
+                <div class="border-bottom py-3 d-flex justify-content-between" data-id="${evento._id}">
+                    <div>
+                        <strong>${evento.nombre}</strong><br>
+                        <small>Fecha: ${evento.fecha}</small><br>
+                        <small>Estado: ${evento.estado}</small>
+                    </div>
+                    <div class="d-flex gap-2">${botones}</div>
+                </div>
+            `;
         });
 
     } catch (error) {
-        console.error("Error cargando eventos:", error);
+        console.error(error);
     }
 }
 
-// ==================================
-// Funcion pra mostrar eventos del editor en publicados
-// =================================
 
+// =============================
+// EVENTOS PUBLICADOS
+// =============================
 async function cargarEventosPublicadosEditor() {
 
     try {
@@ -374,44 +273,24 @@ async function cargarEventosPublicadosEditor() {
         const publicados = eventos.filter(e => e.estado === "aprobado");
 
         if (publicados.length === 0) {
-            contenedor.innerHTML = `
-                <div class="text-center py-5">
-                    <h6>No hay eventos publicados</h6>
-                </div>
-            `;
+            contenedor.innerHTML = `<div class="text-center py-5"><h6>No hay eventos publicados</h6></div>`;
             return;
         }
 
         contenedor.innerHTML = "";
 
         publicados.forEach(evento => {
-
             contenedor.innerHTML += `
-                <div class="border-bottom py-3 d-flex justify-content-between align-items-center">
-
+                <div class="border-bottom py-3 d-flex justify-content-between">
                     <div>
                         <strong>${evento.nombre}</strong><br>
-                        <small>Fecha: ${evento.fecha}</small><br>
-                        <small>Estado: ${evento.estado}</small>
+                        <small>Fecha: ${evento.fecha}</small>
                     </div>
-
-                    <div class="d-flex gap-2">
-
-                        <button class="btn btn-outline-secondary btn-sm btn-anotaciones">
-                            Ver anotaciones
-                        </button>
-
-                        <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
-                            <i class="bi bi-trash"></i>
-                        </button>
-
-                    </div>
-
                 </div>
             `;
         });
 
     } catch (error) {
-        console.error("Error cargando eventos publicados:", error);
+        console.error(error);
     }
 }
