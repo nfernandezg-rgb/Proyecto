@@ -39,7 +39,7 @@ document.addEventListener("click", function (e) {
 
                 // IMPORTANTE
                 setTimeout(() => {
-                    cargarEventos();
+                    cargarEventos("pendiente");
                 }, 100);
             });
     }
@@ -68,51 +68,30 @@ document.addEventListener("click", function (e) {
     // eventos en borrador
     // =============================
 
-    const pendientesBtn = document.getElementById("tab-pendientes");
-    const rechazadosBtn = document.getElementById("tab-rechazados");
+    document.addEventListener("click", function (e) {
 
-    if (e.target.closest("#tab-pendientes")) {
+        const pendientesBtn = document.getElementById("tab-pendientes");
+        const rechazadosBtn = document.getElementById("tab-rechazados");
 
-        pendientesBtn?.classList.add("active");
-        rechazadosBtn?.classList.remove("active");
+        // PENDIENTES
+        if (e.target.closest("#tab-pendientes")) {
 
-        document.getElementById("lista-eventos-editor").innerHTML = `
-            <div class="text-center py-5">
-                <h6>No hay eventos pendientes</h6>
-                <p class="text-muted">Pendientes de aprobación del administrador</p>
-            </div>
-        `;
-    }
+            pendientesBtn?.classList.add("active");
+            rechazadosBtn?.classList.remove("active");
 
-    if (e.target.closest("#tab-rechazados")) {
+            cargarEventos("pendiente"); // clave
+        }
 
-        rechazadosBtn?.classList.add("active");
-        pendientesBtn?.classList.remove("active");
+        // RECHAZADOS
+        if (e.target.closest("#tab-rechazados")) {
 
-        document.getElementById("lista-eventos-editor").innerHTML = `
-            <div class="border-bottom py-3 d-flex justify-content-between align-items-center" data-id="1">
+            rechazadosBtn?.classList.add("active");
+            pendientesBtn?.classList.remove("active");
 
-                <div>
-                    <strong>Título del evento</strong><br>
-                    <small>Fecha de creación: 22/08/2020</small><br>
-                    <small>Estado: Rechazado</small>
-                </div>
+            cargarEventos("rechazado"); // clave
+        }
 
-                <div class="d-flex gap-2">
-
-                    <button class="btn btn-outline-secondary btn-sm btn-anotaciones">
-                        Ver anotaciones
-                    </button>
-
-                    <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
-                        <i class="bi bi-trash"></i>
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-    }
+    });
 
     // =============================
     // Eventos rechazados
@@ -267,17 +246,21 @@ document.addEventListener("submit", function (e) {
 });
 
 
-async function cargarEventos() {
+async function cargarEventos(filtroEstado = null) {
 
     try {
         const res = await fetch("http://localhost:3000/eventos");
         const eventos = await res.json();
 
         const contenedor = document.getElementById("lista-eventos-editor");
-
         if (!contenedor) return;
 
-        if (eventos.length === 0) {
+        // FILTRAR POR ESTADO
+        const eventosFiltrados = filtroEstado
+            ? eventos.filter(e => e.estado === filtroEstado)
+            : eventos;
+
+        if (eventosFiltrados.length === 0) {
             contenedor.innerHTML = `
                 <div class="text-center py-5">
                     <h6>No hay eventos</h6>
@@ -288,7 +271,7 @@ async function cargarEventos() {
 
         contenedor.innerHTML = "";
 
-        eventos.forEach(evento => {
+        eventosFiltrados.forEach(evento => {
 
             contenedor.innerHTML += `
                 <div class="border-bottom py-3 d-flex justify-content-between align-items-center">
@@ -300,11 +283,9 @@ async function cargarEventos() {
                     </div>
 
                     <div class="d-flex gap-2">
-
                         <button class="btn btn-outline-secondary btn-sm ver-evento">
                             <i class="bi bi-eye"></i>
                         </button>
-
                     </div>
 
                 </div>
