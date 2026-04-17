@@ -16,8 +16,11 @@ document.addEventListener("click", function (e) {
             .then(res => res.text())
             .then(html => {
                 contenedor.innerHTML = html;
+
+                setTimeout(() => {
+                    cargarEventosAdmin();
+                }, 100);
             });
-        return;
     }
 
     if (e.target.closest("#admin-publicados")) {
@@ -191,3 +194,89 @@ document.addEventListener("click", function (e) {
     }
 
 });
+
+
+// =============================
+// Cargar eventos en admin 
+// =============================
+
+async function cargarEventosAdmin() {
+
+    try {
+        const res = await fetch("http://localhost:3000/eventos");
+        const eventos = await res.json();
+
+        const contenedor = document.getElementById("lista-eventos-admin");
+        if (!contenedor) return;
+
+        const pendientes = eventos.filter(e => e.estado === "pendiente");
+
+        if (pendientes.length === 0) {
+            contenedor.innerHTML = `
+                <div class="text-center py-5">
+                    <h6>No hay eventos pendientes</h6>
+                    <p class="text-muted">Aquí aparecerán los eventos enviados por los editores</p>
+                </div>
+            `;
+            return;
+        }
+
+        contenedor.innerHTML = "";
+
+        pendientes.forEach(evento => {
+
+            contenedor.innerHTML += `
+                <div class="border rounded p-3 mb-4" data-id="${evento._id}">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+                            <strong>${evento.nombre}</strong><br>
+                            <small>Fecha del evento: ${evento.fecha}</small><br><br>
+
+                            <small><strong>Autor:</strong> ---</small><br>
+                            <small><strong>Fecha para publicación:</strong> ---</small>
+                        </div>
+
+                        <div class="d-flex flex-column align-items-end gap-2">
+
+                            <div class="d-flex gap-2">
+
+                                <button class="btn btn-outline-secondary btn-sm btn-ver">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button class="btn btn-outline-primary btn-sm btn-editar">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+
+                                <button class="btn btn-outline-danger btn-sm btn-eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                            </div>
+
+                            <div class="d-flex gap-2">
+
+                                <button class="btn btn-outline-danger btn-sm btn-rechazar">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+
+                                <button class="btn btn-outline-success btn-sm btn-aprobar">
+                                    <i class="bi bi-check-lg"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+    } catch (error) {
+        console.error("Error cargando eventos admin:", error);
+    }
+}
