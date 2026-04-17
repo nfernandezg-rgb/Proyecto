@@ -200,3 +200,23 @@ router.put("/rechazar/:id", async (req, res) => {
     }
 
 });
+
+// =============================
+// Eliminar evento (editor)
+// =============================
+
+router.delete("/:id", async (req, res) => {
+
+    try {
+        await Evento.findByIdAndDelete(req.params.id);
+
+        res.json({ msj: "Evento eliminado correctamente" });
+
+    } catch (error) {
+        res.status(500).json({
+            msj: "Error al eliminar evento",
+            error
+        });
+    }
+
+});

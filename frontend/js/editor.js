@@ -108,28 +108,61 @@ document.addEventListener("click", function (e) {
 
         if (e.target.closest(".btn-anotaciones")) {
 
-            const motivo = "Este evento fue rechazado porque la información estaba incompleta.";
+            const eventoId = e.target.closest("[data-id]").getAttribute("data-id");
 
-            document.getElementById("texto-anotacion").textContent = motivo;
+            fetch("http://localhost:3000/eventos")
+                .then(res => res.json())
+                .then(eventos => {
 
-            const modal = new bootstrap.Modal(
-                document.getElementById("modalAnotaciones")
-            );
-            modal.show();
+                    const evento = eventos.find(e => e._id === eventoId);
+
+                    const motivo = evento?.motivoRechazo || "No hay anotaciones";
+
+                    document.getElementById("texto-anotacion").textContent = motivo;
+
+                    const modal = new bootstrap.Modal(
+                        document.getElementById("modalAnotaciones")
+                    );
+                    modal.show();
+
+                })
+                .catch(err => console.error(err));
         }
 
         if (e.target.closest(".btn-eliminar-evento")) {
 
+            const eventoId = e.target.closest("[data-id]").getAttribute("data-id");
+
             Swal.fire({
                 title: "¿Eliminar evento?",
-                text: "Se eliminará de la lista de rechazados",
+                text: "Se eliminará permanentemente",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Sí, eliminar"
             }).then((result) => {
 
                 if (result.isConfirmed) {
-                    card.remove();
+
+                    fetch(`http://localhost:3000/eventos/${eventoId}`, {
+                        method: "DELETE"
+                    })
+                        .then(res => res.json())
+                        .then(() => {
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Eliminado",
+                                text: "El evento fue eliminado correctamente"
+                            });
+
+                            // refrescar lista
+                            setTimeout(() => {
+                                cargarEventos("rechazado");
+                            }, 500);
+
+                        })
+                        .catch(err => console.error(err));
+
                 }
 
             });
@@ -344,8 +377,12 @@ async function cargarEventosPublicadosEditor() {
 
                     <div class="d-flex gap-2">
 
-                        <button class="btn btn-outline-secondary btn-sm ver-evento">
-                            <i class="bi bi-eye"></i>
+                        <button class="btn btn-outline-secondary btn-sm btn-anotaciones">
+                            Ver anotaciones
+                        </button>
+
+                        <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
+                            <i class="bi bi-trash"></i>
                         </button>
 
                     </div>
