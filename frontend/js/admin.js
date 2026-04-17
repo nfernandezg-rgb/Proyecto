@@ -99,15 +99,21 @@ document.addEventListener("click", function (e) {
 
             if (result.isConfirmed) {
 
-                console.log("Aprobar evento:", eventoId);
+                fetch(`http://localhost:3000/eventos/aprobar/${eventoId}`, {
+                    method: "PUT"
+                })
+                    .then(res => res.json())
+                    .then(() => {
 
-                Swal.fire({
-                    icon: "success",
-                    title: "Evento Publicado",
-                    text: "Se publicó con éxito el evento seleccionado. Para modificar o eliminar este evento puede realizarlo en la sección del menú principal en Eventos Publicados.",
-                    confirmButtonText: "Continuar"
-                });
+                        Swal.fire({
+                            icon: "success",
+                            title: "Evento Publicado",
+                            text: "Se publicó con éxito el evento seleccionado.",
+                            confirmButtonText: "Continuar"
+                        });
 
+                    })
+                    .catch(err => console.error(err));
             }
 
         });
@@ -128,7 +134,7 @@ document.addEventListener("click", function (e) {
 
 
 // =============================
-// Confirmar rechazo de evento (fuera del listener anterior)
+// Confirmar rechazo de evento
 // =============================
 document.addEventListener("click", function (e) {
 
@@ -145,17 +151,43 @@ document.addEventListener("click", function (e) {
             return;
         }
 
-        console.log("Evento rechazado:", window.eventoRechazoId);
-        console.log("Motivo:", motivo);
+        //  LLAMADA AL BACKEND
+        fetch(`http://localhost:3000/eventos/rechazar/${window.eventoRechazoId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ motivo })
+        })
+            .then(res => res.json())
+            .then(() => {
 
-        Swal.fire("Rechazado", "El evento fue rechazado correctamente", "success");
+                Swal.fire({
+                    icon: "success",
+                    title: "Rechazado",
+                    text: "El evento fue rechazado correctamente"
+                });
 
-        document.getElementById("motivoRechazo").value = "";
+                // limpiar campo
+                document.getElementById("motivoRechazo").value = "";
 
-        const modal = bootstrap.Modal.getInstance(
-            document.getElementById('modalRechazoEvento')
-        );
-        modal.hide();
+                // cerrar modal
+                const modal = bootstrap.Modal.getInstance(
+                    document.getElementById('modalRechazoEvento')
+                );
+                modal.hide();
+
+            })
+            .catch(err => {
+                console.error(err);
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "No se pudo rechazar el evento"
+                });
+            });
+
     }
 
 });
