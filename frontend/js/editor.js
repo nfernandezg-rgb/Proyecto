@@ -68,34 +68,6 @@ document.addEventListener("click", function (e) {
             });
     }
 
-    // =============================
-    // eventos en borrador
-    // =============================
-
-    document.addEventListener("click", function (e) {
-
-        const pendientesBtn = document.getElementById("tab-pendientes");
-        const rechazadosBtn = document.getElementById("tab-rechazados");
-
-        // PENDIENTES
-        if (e.target.closest("#tab-pendientes")) {
-
-            pendientesBtn?.classList.add("active");
-            rechazadosBtn?.classList.remove("active");
-
-            cargarEventos("pendiente"); // clave
-        }
-
-        // RECHAZADOS
-        if (e.target.closest("#tab-rechazados")) {
-
-            rechazadosBtn?.classList.add("active");
-            pendientesBtn?.classList.remove("active");
-
-            cargarEventos("rechazado"); // clave
-        }
-
-    });
 
     // =============================
     // Eventos rechazados
@@ -172,6 +144,34 @@ document.addEventListener("click", function (e) {
 
 });
 
+// =============================
+// eventos en borrador
+// =============================
+
+document.addEventListener("click", function (e) {
+
+    const pendientesBtn = document.getElementById("tab-pendientes");
+    const rechazadosBtn = document.getElementById("tab-rechazados");
+
+    // PENDIENTES
+    if (e.target.closest("#tab-pendientes")) {
+
+        pendientesBtn?.classList.add("active");
+        rechazadosBtn?.classList.remove("active");
+
+        cargarEventos("pendiente"); // clave
+    }
+
+    // RECHAZADOS
+    if (e.target.closest("#tab-rechazados")) {
+
+        rechazadosBtn?.classList.add("active");
+        pendientesBtn?.classList.remove("active");
+
+        cargarEventos("rechazado"); // clave
+    }
+
+});
 
 // ========================================
 // Formulario multi paso para crear evento
@@ -314,23 +314,43 @@ async function cargarEventos(filtroEstado = null) {
 
         eventosFiltrados.forEach(evento => {
 
+            let botones = "";
+
+            // :point_down: SI ES RECHAZADO
+            if (evento.estado === "rechazado") {
+                botones = `
+             <button class="btn btn-outline-secondary btn-sm btn-anotaciones">
+                 Ver anotaciones
+             </button>
+
+            <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
+                <i class="bi bi-trash"></i>
+            </button>
+    `;
+            } else {
+                // :point_down: SI ES PENDIENTE
+                botones = `
+        <button class="btn btn-outline-secondary btn-sm ver-evento">
+            <i class="bi bi-eye"></i>
+        </button>
+    `;
+            }
+
             contenedor.innerHTML += `
-                <div class="border-bottom py-3 d-flex justify-content-between align-items-center">
+<div class="border-bottom py-3 d-flex justify-content-between align-items-center" data-id="${evento._id}">
 
-                    <div>
-                        <strong>${evento.nombre}</strong><br>
-                        <small>Fecha: ${evento.fecha}</small><br>
-                        <small>Estado: ${evento.estado}</small>
-                    </div>
+    <div>
+        <strong>${evento.nombre}</strong><br>
+        <small>Fecha: ${evento.fecha}</small><br>
+        <small>Estado: ${evento.estado}</small>
+    </div>
 
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-outline-secondary btn-sm ver-evento">
-                            <i class="bi bi-eye"></i>
-                        </button>
-                    </div>
+    <div class="d-flex gap-2">
+        ${botones}
+    </div>
 
-                </div>
-            `;
+</div>
+`;
         });
 
     } catch (error) {
