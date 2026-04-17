@@ -30,8 +30,11 @@ document.addEventListener("click", function (e) {
             .then(res => res.text())
             .then(html => {
                 contenedor.innerHTML = html;
+
+                setTimeout(() => {
+                    cargarEventosPublicadosAdmin();
+                }, 100);
             });
-        return;
     }
 
     // =============================
@@ -115,6 +118,10 @@ document.addEventListener("click", function (e) {
                             confirmButtonText: "Continuar"
                         });
 
+                        setTimeout(() => {
+                            cargarEventosAdmin();
+                        }, 500);
+
                     })
                     .catch(err => console.error(err));
             }
@@ -179,6 +186,10 @@ document.addEventListener("click", function (e) {
                     document.getElementById('modalRechazoEvento')
                 );
                 modal.hide();
+
+                setTimeout(() => {
+                    cargarEventosAdmin();
+                }, 500);
 
             })
             .catch(err => {
@@ -278,5 +289,67 @@ async function cargarEventosAdmin() {
 
     } catch (error) {
         console.error("Error cargando eventos admin:", error);
+    }
+}
+
+
+// =============================
+// Cargar eventos publicados
+// =============================
+
+async function cargarEventosPublicadosAdmin() {
+
+    try {
+        const res = await fetch("http://localhost:3000/eventos");
+        const eventos = await res.json();
+
+        const contenedor = document.getElementById("lista-eventos-publicados-admin");
+        if (!contenedor) return;
+
+        const publicados = eventos.filter(e => e.estado === "aprobado");
+
+        if (publicados.length === 0) {
+            contenedor.innerHTML = `
+                <div class="text-center py-5">
+                    <h6>No hay eventos publicados</h6>
+                </div>
+            `;
+            return;
+        }
+
+        contenedor.innerHTML = "";
+
+        publicados.forEach(evento => {
+
+            contenedor.innerHTML += `
+                <div class="border-bottom py-3 d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <strong>${evento.nombre}</strong><br>
+                        <small>Fecha: ${evento.fecha}</small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                        <button class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <button class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+    } catch (error) {
+        console.error(error);
     }
 }
