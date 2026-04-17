@@ -26,6 +26,10 @@ document.addEventListener("click", function (e) {
             .then(res => res.text())
             .then(html => {
                 contenedor.innerHTML = html;
+
+                setTimeout(() => {
+                    cargarEventosPublicadosEditor();
+                }, 100);
             });
     }
 
@@ -246,6 +250,10 @@ document.addEventListener("submit", function (e) {
 });
 
 
+
+// ==================================
+// Funcion para cargar eventos pendientes 
+// =================================
 async function cargarEventos(filtroEstado = null) {
 
     try {
@@ -294,5 +302,59 @@ async function cargarEventos(filtroEstado = null) {
 
     } catch (error) {
         console.error("Error cargando eventos:", error);
+    }
+}
+
+// ==================================
+// Funcion pra mostrar eventos del editor en publicados
+// =================================
+
+async function cargarEventosPublicadosEditor() {
+
+    try {
+        const res = await fetch("http://localhost:3000/eventos");
+        const eventos = await res.json();
+
+        const contenedor = document.getElementById("lista-eventos-publicados-editor");
+        if (!contenedor) return;
+
+        const publicados = eventos.filter(e => e.estado === "aprobado");
+
+        if (publicados.length === 0) {
+            contenedor.innerHTML = `
+                <div class="text-center py-5">
+                    <h6>No hay eventos publicados</h6>
+                </div>
+            `;
+            return;
+        }
+
+        contenedor.innerHTML = "";
+
+        publicados.forEach(evento => {
+
+            contenedor.innerHTML += `
+                <div class="border-bottom py-3 d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <strong>${evento.nombre}</strong><br>
+                        <small>Fecha: ${evento.fecha}</small><br>
+                        <small>Estado: ${evento.estado}</small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+
+                        <button class="btn btn-outline-secondary btn-sm ver-evento">
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+    } catch (error) {
+        console.error("Error cargando eventos publicados:", error);
     }
 }
