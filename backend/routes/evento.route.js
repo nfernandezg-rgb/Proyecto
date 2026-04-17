@@ -139,3 +139,64 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+// =============================
+// Aprobar evento (admin)
+// =============================
+router.put("/aprobar/:id", async (req, res) => {
+
+    try {
+        const eventoActualizado = await Evento.findByIdAndUpdate(
+            req.params.id,
+            { estado: "aprobado" },
+            { new: true }
+        );
+
+        res.json(eventoActualizado);
+
+    } catch (error) {
+        res.status(500).json({
+            msj: "Error al aprobar evento",
+            error
+        });
+    }
+
+});
+
+
+// =============================
+// Rechazar evento (admin)
+// =============================
+
+router.put("/rechazar/:id", async (req, res) => {
+
+    const { motivo } = req.body;
+
+    if (!motivo) {
+        return res.status(400).json({
+            msj: "Debe indicar el motivo"
+        });
+    }
+
+    try {
+        const eventoActualizado = await Evento.findByIdAndUpdate(
+            req.params.id,
+            {
+                estado: "rechazado",
+                motivoRechazo: motivo
+            },
+            { new: true }
+        );
+
+        res.json(eventoActualizado);
+
+    } catch (error) {
+        res.status(500).json({
+            msj: "Error al rechazar evento",
+            error
+        });
+    }
+
+});
