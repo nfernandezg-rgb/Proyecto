@@ -59,7 +59,7 @@ document.addEventListener("click", function (e) {
 
                 if (!evento) return;
 
-                fetch("./components/detalle-evento.html")
+                fetch("./components/modal-detalle-evento.html")
                     .then(res => res.text())
                     .then(html => {
 
