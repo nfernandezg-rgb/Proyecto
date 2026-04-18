@@ -201,6 +201,26 @@ document.addEventListener("submit", async function (e) {
     }
 });
 
+// =============================
+// FORMULARIO MULTIPASO
+// =============================
+
+window.nextStep = function () {
+    document.getElementById("step-1").style.display = "none";
+    document.getElementById("step-2").style.display = "block";
+
+    document.getElementById("step1-indicator")?.classList.replace("bg-primary", "bg-secondary");
+    document.getElementById("step2-indicator")?.classList.replace("bg-secondary", "bg-primary");
+};
+
+window.prevStep = function () {
+    document.getElementById("step-1").style.display = "block";
+    document.getElementById("step-2").style.display = "none";
+
+    document.getElementById("step1-indicator")?.classList.replace("bg-secondary", "bg-primary");
+    document.getElementById("step2-indicator")?.classList.replace("bg-primary", "bg-secondary");
+};
+
 
 // =============================
 // CARGAR EVENTOS (pendiente/rechazado)
