@@ -255,11 +255,7 @@ async function cargarEventos(filtroEstado = null) {
                     <button class="btn btn-outline-danger btn-sm px-2 py-1 btn-eliminar-evento">
                         <i class="bi bi-trash"></i>
                     </button>
-                  `
-                : `
-                    <button class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-eye"></i>
-                    </button>
+                  `: `
                   `;
 
             contenedor.innerHTML += `
@@ -269,7 +265,9 @@ async function cargarEventos(filtroEstado = null) {
                         <small>Fecha: ${evento.fecha}</small><br>
                         <small>Estado: ${evento.estado}</small>
                     </div>
-                    <div class="d-flex gap-2">${botones}</div>
+                    <div class="d-flex gap-2 align-items-center">
+                    ${botones}
+                    </div>
                 </div>
             `;
         });
