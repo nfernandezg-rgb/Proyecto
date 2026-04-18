@@ -304,7 +304,8 @@ async function cargarEventosPublicadosEditor() {
                 <div class="border-bottom py-3 d-flex justify-content-between">
                     <div>
                         <strong>${evento.nombre}</strong><br>
-                        <small>Fecha: ${evento.fecha}</small>
+                        <small>Fecha: ${evento.fecha}</small><br>
+                        <small class="text-success fw-semibold">Estado: ${evento.estado}</small>
                     </div>
                 </div>
             `;
