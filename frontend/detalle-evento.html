@@ -13,6 +13,7 @@
 
 <body>
 
+    <!-- HEADER -->
     <div class="header-container">
         <div id="header"></div>
         <div id="navbar"></div>
@@ -33,15 +34,15 @@
 
                 <!-- FECHA -->
                 <div class="fecha-box text-center">
-                    <h3>01</h3>
-                    <span>AGO</span>
+                    <h3 id="detalle-dia">--</h3>
+                    <span id="detalle-mes">--</span>
                 </div>
 
                 <!-- INFO -->
                 <div>
-                    <h4>Publicación de Política Nacional de Discapacidad</h4>
-                    <p>01 Agosto 2020</p>
-                    <p>15:00 - 16:00</p>
+                    <h4>Nombre del evento</h4>
+                    <p id="detalle-fecha">--</p>
+                    <p id="detalle-hora">--</p>
                     <p>Plataforma Zoom</p>
                 </div>
 
@@ -53,17 +54,13 @@
 
             <div class="col-md-8">
                 <h5>Descripción</h5>
-                <p>
-                    Texto de ejemplo del evento. Aquí irá la descripción completa del evento.
-                </p>
+                <p id="detalle-descripcion"></p>
             </div>
 
             <div class="col-md-4">
                 <div class="card p-3 info-card">
                     <h6>Información del evento</h6>
-                    <p>Fecha: 01 Agosto 2020</p>
-                    <p>Hora: 15:00 - 16:00</p>
-                    <p>Modalidad: Virtual</p>
+                    <p id="detalle-info-lateral"></p>
                 </div>
             </div>
 
@@ -75,13 +72,13 @@
             <div class="col-md-6">
                 <div class="card p-3 publico-card">
                     <h6>Público Meta</h6>
-                    <p>Personas interesadas en inclusión y discapacidad.</p>
+                    <p id="detalle-publico"></p>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <h6>Objetivos</h6>
-                <p>Brindar información sobre la política nacional.</p>
+                <p id="detalle-objetivos"></p>
             </div>
 
         </div>
@@ -98,31 +95,21 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td>08:00</td>
-                        <td>Palabras de bienvenida</td>
-                    </tr>
-                    <tr>
-                        <td>09:00</td>
-                        <td>Exposición principal</td>
-                    </tr>
-                </tbody>
+                <tbody id="detalle-agenda"></tbody>
             </table>
         </div>
 
+        <!-- INFO ADICIONAL -->
         <div class="mb-4">
 
             <h5>Información adicional</h5>
 
-            <p>
-                Texto adicional del evento. Aquí puedes incluir detalles extra relevantes para los participantes.
-            </p>
+            <p id="detalle-info"></p>
 
             <div class="d-flex gap-3 flex-wrap">
 
                 <button id="btnLectura" class="btn btn-outline-primary">
-                    Lectura facil del evento
+                    Lectura fácil del evento
                 </button>
 
                 <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalConsulta">
@@ -144,52 +131,38 @@
                         <div class="modal-body">
 
                             <p class="text-center small">
-                                Para solicitar más información o aclarar dudas acerca de este evento,
-                                escriba su consulta en el recuadro siguiente y un correo electrónico.
+                                Escriba su consulta y su correo electrónico.
                             </p>
 
-                            <!-- FORM -->
                             <form id="formConsulta">
 
                                 <div class="mb-3">
                                     <label class="form-label">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="correoConsulta" required>
+                                    <input type="email" class="form-control" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Consulta</label>
-                                    <textarea class="form-control" id="textoConsulta" rows="4" required></textarea>
+                                    <textarea class="form-control" rows="4" required></textarea>
                                 </div>
 
                             </form>
 
                         </div>
 
-                        <div class="modal-footer justify-content-between">
+                        <div class="modal-footer">
                             <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" id="btnEnviarConsulta">Aceptar</button>
+                            <button class="btn btn-primary">Enviar</button>
                         </div>
 
                     </div>
                 </div>
             </div>
 
+            <!-- LECTURA FACIL -->
             <div id="lecturaFacil" class="lectura-box mt-4 d-none">
-
-                <h5>Publicación de Política Nacional de Discapacidad 2020 - 2030</h5>
-
-                <p>
-                    Estamos considerando que aquellos que hoy tienen prueba negativa y están asintomáticos...
-                </p>
-
-                <p>
-                    El doctor explicó que en el centro médico se procedió a extremar medidas de bioseguridad...
-                </p>
-
-                <p>
-                    Esta acción busca la salvaguarda de los usuarios y funcionarios...
-                </p>
-
+                <h5>Lectura fácil</h5>
+                <p id="detalle-lectura"></p>
             </div>
 
         </div>
@@ -203,8 +176,10 @@
 
     </main>
 
+    <!-- FOOTER -->
     <div id="footer"></div>
 
+    <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/load-components.js"></script>
 
@@ -212,27 +187,63 @@
         const params = new URLSearchParams(window.location.search);
         const id = params.get("id");
 
-        const eventos = {
-            1: {
-                titulo: "Publicación de Política Nacional de Discapacidad",
-                fecha: "01 Agosto 2020",
-                hora: "15:00 - 16:00",
-                lugar: "Plataforma Zoom"
-            },
-            2: {
-                titulo: "Evento 2",
-                fecha: "05 Agosto 2020",
-                hora: "10:00 - 12:00",
-                lugar: "Presencial"
+        async function cargarDetalleEvento() {
+
+            try {
+                const res = await fetch(`http://localhost:3000/eventos/${id}`);
+                const evento = await res.json();
+
+                // TITULO
+                document.querySelector("h4").textContent = evento.nombre;
+
+                // FECHA Y HORA
+                document.getElementById("detalle-fecha").textContent = evento.fecha;
+                document.getElementById("detalle-hora").textContent =
+                    `${evento.horaInicio} - ${evento.horaFin}`;
+
+                // DIA Y MES
+                const partes = evento.fecha.split("-");
+                document.getElementById("detalle-dia").textContent = partes[2];
+                document.getElementById("detalle-mes").textContent = partes[1];
+
+                // DESCRIPCION
+                document.getElementById("detalle-descripcion").textContent = evento.descripcion;
+
+                // INFO LATERAL
+                document.getElementById("detalle-info-lateral").innerHTML = `
+                Fecha: ${evento.fecha}<br>
+                Hora: ${evento.horaInicio} - ${evento.horaFin}<br>
+                Modalidad: Virtual
+            `;
+
+                // PUBLICO
+                document.getElementById("detalle-publico").textContent = evento.publico;
+
+                // OBJETIVOS
+                document.getElementById("detalle-objetivos").textContent = evento.objetivos;
+
+                // AGENDA
+                document.getElementById("detalle-agenda").innerHTML = `
+                <tr>
+                    <td>${evento.horaInicio}</td>
+                    <td>${evento.agenda}</td>
+                </tr>
+            `;
+
+                // INFO ADICIONAL
+                document.getElementById("detalle-info").textContent = evento.infoAdicional;
+
+                // LECTURA FACIL
+                document.getElementById("detalle-lectura").textContent = evento.agendaFacil;
+
+            } catch (error) {
+                console.error("Error cargando detalle:", error);
             }
-        };
-
-        const evento = eventos[id];
-
-        if (evento) {
-            document.querySelector("h4").textContent = evento.titulo;
         }
+
+        cargarDetalleEvento();
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
