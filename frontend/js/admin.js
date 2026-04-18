@@ -51,40 +51,91 @@ document.addEventListener("click", function (e) {
 
         const eventoId = e.target.closest("[data-id]").getAttribute("data-id");
 
-        fetch("http://localhost:3000/eventos")
+        fetch(`http://localhost:3000/eventos/${eventoId}`)
             .then(res => res.json())
-            .then(eventos => {
+            .then(evento => {
 
-                const evento = eventos.find(e => e._id === eventoId);
+                document.getElementById("contenido-detalle-evento").innerHTML = `
+                <div class="container-fluid bg-light p-3 rounded">
 
-                if (!evento) return;
+                    <!-- IMAGEN -->
+                    <img src="https://picsum.photos/900/300" class="img-fluid rounded mb-3">
 
-                fetch("./components/modal-detalle-evento.html")
-                    .then(res => res.text())
-                    .then(html => {
+                    <!-- HEADER -->
+                    <div class="d-flex gap-3 align-items-center mb-3">
 
-                        document.getElementById("contenido-detalle-evento").innerHTML = html;
+                        <div class="text-center border px-2 py-1 rounded">
+                            <strong>${evento.fecha.split("-")[2]}</strong><br>
+                            <small>${evento.fecha.split("-")[1]}</small>
+                        </div>
 
-                        // INYECTAR DATOS
-                        document.getElementById("detalle-nombre").textContent = evento.nombre;
-                        document.getElementById("detalle-fecha").textContent = evento.fecha;
-                        document.getElementById("detalle-hora").textContent = `${evento.horaInicio} - ${evento.horaFin}`;
-                        document.getElementById("detalle-descripcion").textContent = evento.descripcion;
-                        document.getElementById("detalle-objetivos").textContent = evento.objetivos;
-                        document.getElementById("detalle-agenda").textContent = evento.agenda;
-                        document.getElementById("detalle-publico").textContent = evento.publico;
-                        document.getElementById("detalle-info").textContent = evento.infoAdicional;
+                        <div>
+                            <h4 class="fw-bold textprimary">${evento.nombre}</h4>
+                            <small class="text-muted">${evento.fecha}</small><br>
+                            <small>${evento.horaInicio} - ${evento.horaFin}</small>
+                        </div>
 
-                        const modal = new bootstrap.Modal(
-                            document.getElementById('modalDetalleEvento')
-                        );
+                    </div>
 
-                        modal.show();
+                    <!-- DESCRIPCIÓN + INFO -->
+                    <div class="row mb-4">
 
-                    });
+                        <div class="col-md-8">
+                            <h6 class="text-secondary fw-semibold>Descripción</h6>
+                            <p>${evento.descripcion}</p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card p-3 shadow-sm border-0">
+                                <h6>Información del evento</h6>
+                                <p><strong>Fecha:</strong> ${evento.fecha}</p>
+                                <p><strong>Hora:</strong> ${evento.horaInicio} - ${evento.horaFin}</p>
+                                <p><strong>Público:</strong> ${evento.publico}</p>
+                         </div>
+                     </div>
+
+                 </div>
+
+                <!-- PUBLICO + OBJETIVOS -->
+                <div class="row mb-4">
+
+                    <div class="col-md-6">
+                        <div class="card p-3">
+                        <h6>Público Meta</h6>
+                        <p>${evento.publico}</p>
+                    </div>
+               </div>
+
+               <div class="col-md-6">
+                   <h6>Objetivos</h6>
+                   <p>${evento.objetivos}</p>
+               </div>
+
+           </div>
+
+           <!-- AGENDA -->
+           <div class="mb-4">
+               <h6>Agenda</h6>
+               <p>${evento.agenda}</p>
+           </div>
+
+           <!-- INFO ADICIONAL -->
+           <div class="mb-3">
+               <h6>Información adicional</h6>
+               <p>${evento.infoAdicional}</p>
+           </div>
+
+        </div>
+        `;
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById('modalDetalleEvento')
+                );
+
+                modal.show();
 
             })
-            .catch(err => console.error(err));
+            .catch(err => console.error("Error:", err));
     }
 
 
