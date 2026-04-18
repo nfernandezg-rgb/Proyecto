@@ -229,8 +229,10 @@ async function cargarEventos(filtroEstado = null) {
 
             const botones = evento.estado === "rechazado"
                 ? `
-                    <button class="btn btn-outline-secondary btn-sm btn-anotaciones">Ver anotaciones</button>
-                    <button class="btn btn-outline-danger btn-sm btn-eliminar-evento">
+                    <button class="btn btn-outline-secondary btn-sm px-2 py-1 btn-anotaciones">
+                    Ver anotaciones
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm px-2 py-1 btn-eliminar-evento">
                         <i class="bi bi-trash"></i>
                     </button>
                   `
