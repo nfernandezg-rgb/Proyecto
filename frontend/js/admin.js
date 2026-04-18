@@ -49,47 +49,44 @@ document.addEventListener("click", function (e) {
     // Ver detalles
     if (e.target.closest(".btn-ver")) {
 
-        console.log("Ver detalle evento:", eventoId);
+        const eventoId = e.target.closest("[data-id]").getAttribute("data-id");
 
-        fetch("./components/detalle-evento.html")
-            .then(res => res.text())
-            .then(html => {
+        fetch("http://localhost:3000/eventos")
+            .then(res => res.json())
+            .then(eventos => {
 
-                document.getElementById("contenido-detalle-evento").innerHTML = html;
+                const evento = eventos.find(e => e._id === eventoId);
 
-                const modal = new bootstrap.Modal(
-                    document.getElementById('modalDetalleEvento')
-                );
+                if (!evento) return;
 
-                modal.show();
+                fetch("./components/detalle-evento.html")
+                    .then(res => res.text())
+                    .then(html => {
+
+                        document.getElementById("contenido-detalle-evento").innerHTML = html;
+
+                        // INYECTAR DATOS
+                        document.getElementById("detalle-nombre").textContent = evento.nombre;
+                        document.getElementById("detalle-fecha").textContent = evento.fecha;
+                        document.getElementById("detalle-hora").textContent = `${evento.horaInicio} - ${evento.horaFin}`;
+                        document.getElementById("detalle-descripcion").textContent = evento.descripcion;
+                        document.getElementById("detalle-objetivos").textContent = evento.objetivos;
+                        document.getElementById("detalle-agenda").textContent = evento.agenda;
+                        document.getElementById("detalle-publico").textContent = evento.publico;
+                        document.getElementById("detalle-info").textContent = evento.infoAdicional;
+
+                        const modal = new bootstrap.Modal(
+                            document.getElementById('modalDetalleEvento')
+                        );
+
+                        modal.show();
+
+                    });
 
             })
-            .catch(err => console.error("Error cargando detalle:", err));
+            .catch(err => console.error(err));
     }
 
-    // Editar
-    if (e.target.closest(".btn-editar")) {
-        console.log("Editar evento:", eventoId);
-    }
-
-    // Eliminar
-    if (e.target.closest(".btn-eliminar")) {
-
-        Swal.fire({
-            title: "¿Eliminar evento?",
-            text: "Esta acción no se puede deshacer",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "Cancelar"
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-                console.log("Eliminar evento:", eventoId);
-            }
-
-        });
-    }
 
     // Aprobar
     if (e.target.closest(".btn-aprobar")) {
@@ -255,14 +252,6 @@ async function cargarEventosAdmin() {
 
                                 <button class="btn btn-outline-secondary btn-sm btn-ver">
                                     <i class="bi bi-eye"></i>
-                                </button>
-
-                                <button class="btn btn-outline-primary btn-sm btn-editar">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-
-                                <button class="btn btn-outline-danger btn-sm btn-eliminar">
-                                    <i class="bi bi-trash"></i>
                                 </button>
 
                             </div>
