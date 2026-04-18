@@ -81,7 +81,7 @@ document.addEventListener("click", function (e) {
                     <div class="row mb-4">
 
                         <div class="col-md-8">
-                            <h6 class="text-secondary fw-semibold>Descripción</h6>
+                            <h6 class="text-secondary fw-semibold">Descripción</h6>
                             <p>${evento.descripcion}</p>
                         </div>
 
@@ -292,9 +292,6 @@ async function cargarEventosAdmin() {
                         <div>
                             <strong>${evento.nombre}</strong><br>
                             <small>Fecha del evento: ${evento.fecha}</small><br><br>
-
-                            <small><strong>Autor:</strong> ---</small><br>
-                            <small><strong>Fecha para publicación:</strong> ---</small>
                         </div>
 
                         <div class="d-flex flex-column align-items-end gap-2">
@@ -362,31 +359,24 @@ async function cargarEventosPublicadosAdmin() {
         publicados.forEach(evento => {
 
             contenedor.innerHTML += `
-                <div class="border-bottom py-3 d-flex justify-content-between align-items-center">
+            <div class="border-bottom py-3 d-flex justify-content-between align-items-center"
+                 data-id="${evento._id}">
 
-                    <div>
-                        <strong>${evento.nombre}</strong><br>
-                        <small>Fecha: ${evento.fecha}</small>
-                    </div>
-
-                    <div class="d-flex gap-2">
-
-                        <button class="btn btn-outline-secondary btn-sm">
-                            <i class="bi bi-eye"></i>
-                        </button>
-
-                        <button class="btn btn-outline-primary btn-sm">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-
-                        <button class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-trash"></i>
-                        </button>
-
-                    </div>
-
+                <div>
+                    <strong>${evento.nombre}</strong><br>
+                    <small>Fecha: ${evento.fecha}</small>
                 </div>
-            `;
+ 
+                <div class="d-flex gap-2">
+
+                     <button class="btn btn-outline-secondary btn-sm btn-ver">
+                         <i class="bi bi-eye"></i>
+                     </button>
+
+             </div>
+
+          </div>
+          `;
         });
 
     } catch (error) {
