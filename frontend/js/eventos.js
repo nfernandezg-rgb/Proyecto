@@ -78,3 +78,33 @@ document.addEventListener("click", function (e) {
     }
 
 });
+
+
+//realizar consulta
+document.addEventListener("submit", async (e) => {
+
+    if (e.target.id === "formInscripcion") {
+
+        e.preventDefault();
+
+        const datos = {
+            nombre: e.target[0].value,
+            correo: e.target[1].value,
+            profesion: e.target[2].value,
+            entidad: e.target[3].value,
+            motivo: e.target[4].value
+        };
+
+        await fetch("http://localhost:3000/inscripciones", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        Swal.fire("Éxito", "Inscripción realizada", "success");
+
+        e.target.reset();
+    }
+});

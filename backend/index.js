@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3000;
 
 // importacion de Rutas
 const eventoRoute = require("./routes/evento.route");
+const consultaRoute = require("./routes/consulta.route");
+const inscripcionRoute = require("./routes/inscripcion.route");
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,6 +23,8 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // rutas
 app.use("/eventos", eventoRoute);
+app.use("/consultas", consultaRoute);
+app.use("/inscripciones", inscripcionRoute);
 
 app.get('/', (req, res) => {
     res.send('Servidor funcionando');
