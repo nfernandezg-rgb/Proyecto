@@ -152,7 +152,7 @@
 
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary">Enviar</button>
+                            <button class="btn btn-primary" id="btnEnviarConsulta">Enviar</button>
                         </div>
 
                     </div>
@@ -189,32 +189,6 @@
 
         async function cargarDetalleEvento() {
 
-            //
-            document.getElementById("btnEnviarConsulta").addEventListener("click", async () => {
-
-                const correo = document.getElementById("correoConsulta").value;
-                const mensaje = document.getElementById("textoConsulta").value;
-
-                if (!correo || !mensaje) {
-                    Swal.fire("Error", "Complete todos los campos", "error");
-                    return;
-                }
-
-                await fetch("http://localhost:3000/consultas", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        eventoId: id,
-                        correo,
-                        mensaje
-                    })
-                });
-
-                Swal.fire("Éxito", "Consulta enviada", "success");
-            });
-            //
             try {
                 const res = await fetch(`http://localhost:3000/eventos/${id}`);
                 const evento = await res.json();
@@ -268,6 +242,33 @@
         }
 
         cargarDetalleEvento();
+
+        //codigo js necesario para completar consulta 
+        document.getElementById("btnEnviarConsulta").addEventListener("click", async () => {
+
+            const correo = document.getElementById("correoConsulta").value;
+            const mensaje = document.getElementById("textoConsulta").value;
+
+            if (!correo || !mensaje) {
+                Swal.fire("Error", "Complete todos los campos", "error");
+                return;
+            }
+
+            await fetch("http://localhost:3000/consultas", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    eventoId: id,
+                    correo,
+                    mensaje
+                })
+            });
+
+            Swal.fire("Éxito", "Consulta enviada", "success");
+        });
+        //
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
