@@ -138,12 +138,12 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Correo electrónico</label>
-                                    <input type="email" class="form-control" required>
+                                    <input type="email" id="correoConsulta" class="form-control" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Consulta</label>
-                                    <textarea class="form-control" rows="4" required></textarea>
+                                    <textarea class="form-control" id="textoConsulta" rows="4" required></textarea>
                                 </div>
 
                             </form>
@@ -152,7 +152,7 @@
 
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" id="btnEnviarConsulta">Enviar</button>
+                            <button class="btn btn-primary" type="submit">Enviar</button>
                         </div>
 
                     </div>
@@ -244,7 +244,9 @@
         cargarDetalleEvento();
 
         //codigo js necesario para completar consulta 
-        document.getElementById("btnEnviarConsulta").addEventListener("click", async () => {
+        document.getElementById("formConsulta").addEventListener("submit", async (e) => {
+
+            e.preventDefault();
 
             const correo = document.getElementById("correoConsulta").value;
             const mensaje = document.getElementById("textoConsulta").value;
@@ -267,6 +269,14 @@
             });
 
             Swal.fire("Éxito", "Consulta enviada", "success");
+
+            e.target.reset();
+
+            const modal = bootstrap.Modal.getInstance(
+                document.getElementById('modalConsulta')
+            );
+            modal.hide();
+
         });
         //
     </script>
