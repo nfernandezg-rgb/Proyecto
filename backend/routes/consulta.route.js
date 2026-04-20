@@ -48,4 +48,15 @@ router.get("/", async (req, res) => {
     }
 });
 
+
+// eliminar consulta
+router.delete("/:id", async (req, res) => {
+    try {
+        await Consulta.findByIdAndDelete(req.params.id);
+        res.json({ msg: "Consulta eliminada" });
+    } catch (error) {
+        res.status(500).json({ error: "Error eliminando consulta" });
+    }
+});
+
 module.exports = router;
