@@ -1,18 +1,17 @@
 //codigo js necesario para mostrar en el dahsboard del editor los inscritps por evento
 
-document.addEventListener("DOMContentLoaded", cargarEventos);
-
-async function cargarEventos() {
+window.cargarEventosInscripciones = async function () {
     try {
-        const res = await fetch("http://localhost:3000/eventos");
+        const res = await fetch("http://localhost:3000/eventos?estado=aprobado");
         const eventos = await res.json();
 
         const contenedor = document.getElementById("lista-eventos");
 
+        if (!contenedor) return;
+
         contenedor.innerHTML = "";
 
         eventos.forEach(evento => {
-
             contenedor.innerHTML += `
         <div class="col-md-6">
           <div class="border rounded p-3 d-flex justify-content-between align-items-center">
@@ -36,19 +35,21 @@ async function cargarEventos() {
     } catch (error) {
         console.error(error);
     }
-}
+};
 
 //click en ver inscritos
 
 document.addEventListener("click", async (e) => {
-
-    if (e.target.closest(".ver-inscritos")) {
-
-        const id = e.target.closest(".ver-inscritos").dataset.id;
-
+    const btnVerInscritos = e.target.closest(".ver-inscritos");
+    if (btnVerInscritos) {
+        const id = btnVerInscritos.dataset.id;
         cargarInscritos(id);
+        return;
     }
 
+    if (e.target.id === "btnVolver") {
+        window.cargarEventosInscripciones?.();
+    }
 });
 
 //mostrar inscritos
@@ -60,14 +61,31 @@ async function cargarInscritos(eventoId) {
         const res = await fetch(`http://localhost:3000/inscripciones/evento/${eventoId}`);
         const inscritos = await res.json();
 
-        const contenedor = document.getElementById("lista-eventos");
+        const contenedor = document.querySelector("#lista-eventos");
 
-        if (inscritos.length === 0) {
-            contenedor.innerHTML = "<p>No hay inscritos</p>";
+        if (!contenedor) {
+            console.warn("contenedor aún no existe");
             return;
         }
 
-        contenedor.innerHTML = "<h5>Personas inscritas:</h5>";
+        if (inscritos.length === 0) {
+            contenedor.innerHTML = `
+              <button class="btn btn-secondary mb-3" id="btnVolver">
+                ← Volver
+              </button>
+
+              <p>No hay inscritos</p>
+            `;
+            return;
+        }
+
+        contenedor.innerHTML = `
+          <button class="btn btn-secondary mb-3" id="btnVolver">
+            ← Volver
+          </button>
+
+          <h5>Personas inscritas:</h5>
+         `;
 
         inscritos.forEach(i => {
 
@@ -86,3 +104,6 @@ async function cargarInscritos(eventoId) {
         console.error(error);
     }
 }
+
+
+
