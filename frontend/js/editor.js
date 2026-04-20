@@ -21,7 +21,12 @@ document.addEventListener("click", async function (e) {
 
     if (e.target.closest("#menu-borrador")) {
         e.preventDefault();
-        cargarVista("./components/eventos-borrador.html", () => cargarEventos("pendiente"));
+        cargarVista(
+            "./components/eventos-borrador.html",
+            () => {
+                window.cargarEventos?.("pendiente");
+            }
+        );
     }
 
     if (e.target.closest("#menu-consultas")) {
@@ -232,7 +237,6 @@ window.prevStep = function () {
 // CARGAR EVENTOS (pendiente/rechazado)
 // =============================
 async function cargarEventos(filtroEstado = null) {
-
     try {
         const res = await fetch("http://localhost:3000/eventos");
         const eventos = await res.json();
@@ -252,17 +256,16 @@ async function cargarEventos(filtroEstado = null) {
         contenedor.innerHTML = "";
 
         filtrados.forEach(evento => {
-
             const botones = evento.estado === "rechazado"
                 ? `
                     <button class="btn btn-outline-secondary btn-sm px-2 py-1 btn-anotaciones">
-                    Ver anotaciones
+                        Ver anotaciones
                     </button>
                     <button class="btn btn-outline-danger btn-sm px-2 py-1 btn-eliminar-evento">
                         <i class="bi bi-trash"></i>
                     </button>
-                  `: `
-                  `;
+                  `
+                : ``;
 
             contenedor.innerHTML += `
                 <div class="border-bottom py-3 d-flex justify-content-between" data-id="${evento._id}">
@@ -272,7 +275,7 @@ async function cargarEventos(filtroEstado = null) {
                         <small>Estado: ${evento.estado}</small>
                     </div>
                     <div class="d-flex gap-2 align-items-center">
-                    ${botones}
+                        ${botones}
                     </div>
                 </div>
             `;
@@ -282,6 +285,8 @@ async function cargarEventos(filtroEstado = null) {
         console.error(error);
     }
 }
+
+window.cargarEventos = cargarEventos;
 
 
 // =============================
