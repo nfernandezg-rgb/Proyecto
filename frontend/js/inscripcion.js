@@ -31,6 +31,9 @@ document.getElementById("formInscripcionCompleto")
   .addEventListener("submit", async function (e) {
 
     e.preventDefault(); // evita recarga
+    //CAMBIOS RECIENTES: se agregaron estas dos lineas de abajo
+    const params = new URLSearchParams(window.location.search);
+    const eventoId = params.get("id");
 
     const data = {
       nombre: document.getElementById("nombre").value,
@@ -40,7 +43,8 @@ document.getElementById("formInscripcionCompleto")
       distrito: document.getElementById("distrito").value,
       correo: document.getElementById("correo").value,
       telefono: document.getElementById("telefono").value,
-      descripcion: document.getElementById("descripcion").value
+      descripcion: document.getElementById("descripcion").value,
+      eventoId //CAMBIOS RECIENTES: se agrego tambien esto
     };
 
     try {

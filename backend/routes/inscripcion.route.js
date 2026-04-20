@@ -7,6 +7,8 @@ const Inscripcion = require("../models/inscripcion.model");
 // =============================
 router.post("/", async (req, res) => {
 
+    console.log("BODY:", req.body); //CAMBIOS RECIENTES
+
     const {
         nombre,
         identificacion,
@@ -16,7 +18,7 @@ router.post("/", async (req, res) => {
         correo,
         telefono,
         descripcion,
-        eventoId
+        eventoId //CAMBIOS RECIENTES:
     } = req.body;
 
     // Validación básica
@@ -37,7 +39,7 @@ router.post("/", async (req, res) => {
             correo,
             telefono,
             descripcion,
-            eventoId
+            eventoId //CAMBIOS RECIENTES:
         });
 
         const guardado = await nuevaInscripcion.save();
@@ -117,6 +119,23 @@ router.get("/:id", async (req, res) => {
         });
     }
 
+});
+
+// Obtener inscripciones por evento. CAMBIOS RECIENTES:
+router.get("/evento/:eventoId", async (req, res) => {
+    try {
+        const inscripciones = await Inscripcion.find({
+            eventoId: req.params.eventoId
+        });
+
+        res.json(inscripciones);
+
+    } catch (error) {
+        res.status(500).json({
+            msj: "Error al obtener inscripciones por evento",
+            error
+        });
+    }
 });
 
 

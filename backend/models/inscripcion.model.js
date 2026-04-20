@@ -21,6 +21,10 @@ const inscripcionSchema = new mongoose.Schema({
     fecha: {
         type: Date,
         default: Date.now
+    },
+    eventoId: { 
+        type: String,
+        required: true
     }
 });
 
