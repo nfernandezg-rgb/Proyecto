@@ -1,7 +1,5 @@
 // esperar componente
-esperarElemento("lista-inscritos", cargarEventos);
-
-function esperarElemento(id, callback) {
+function esperarElementoInscripciones(id, callback) {
     const intervalo = setInterval(() => {
         const el = document.getElementById(id);
         if (el) {
@@ -11,36 +9,32 @@ function esperarElemento(id, callback) {
     }, 300);
 }
 
-// ==========================
-// CARGAR EVENTOS
-// ==========================
-async function cargarEventos() {
+esperarElementoInscripciones("lista-eventos", cargarEventosInscripciones);
 
+// ==========================
+// CARGAR EVENTOS APROBADOS
+// ==========================
+async function cargarEventosInscripciones() {
     try {
-        const res = await fetch("http://localhost:3000/eventos");
+        const res = await fetch("http://localhost:3000/eventos?estado=aprobado");
         const eventos = await res.json();
 
-        const contenedor = document.querySelector(".row.g-3");
+        const contenedor = document.getElementById("lista-eventos");
         if (!contenedor) return;
 
         contenedor.innerHTML = "";
 
-        const aprobados = eventos.filter(e => e.estado === "aprobado");
-
-        aprobados.forEach(e => {
-
+        eventos.forEach(evento => {
             contenedor.innerHTML += `
                 <div class="col-md-6">
                     <div class="border rounded p-3 d-flex justify-content-between align-items-center">
 
                         <div>
-                            <strong>${e.nombre}</strong><br>
-                            <small>Fecha del Evento: ${e.fecha}</small>
+                            <strong>${evento.nombre}</strong><br>
+                            <small>Fecha del Evento: ${evento.fecha}</small>
                         </div>
 
-                        <button 
-                            class="btn btn-primary ver-inscritos"
-                            data-id="${e._id}">
+                        <button class="btn btn-primary ver-inscritos" data-id="${evento._id}">
                             <i class="bi bi-arrow-right"></i>
                         </button>
 
@@ -55,42 +49,64 @@ async function cargarEventos() {
 }
 
 // ==========================
-// CLICK VER INSCRITOS
+// CLICK VER INSCRITOS / VOLVER
 // ==========================
 document.addEventListener("click", async (e) => {
 
-    const btn = e.target.closest(".ver-inscritos");
-    if (!btn) return;
+    const btnVer = e.target.closest(".ver-inscritos");
+    if (btnVer) {
+        const eventoId = btnVer.dataset.id;
+        cargarInscritos(eventoId);
+        return;
+    }
 
-    const eventoId = btn.dataset.id;
+    if (e.target.id === "btnVolver") {
+        cargarEventosInscripciones();
+    }
+});
+
+// ==========================
+// MOSTRAR INSCRITOS
+// ==========================
+async function cargarInscritos(eventoId) {
 
     try {
         const res = await fetch(`http://localhost:3000/inscripciones/evento/${eventoId}`);
         const inscritos = await res.json();
 
-        const contenedor = document.getElementById("lista-inscritos");
-
-        contenedor.innerHTML = "<h5>Personas inscritas</h5>";
-
-        if (inscritos.length === 0) {
-            contenedor.innerHTML += "<p>No hay inscritos</p>";
+        const contenedor = document.getElementById("lista-eventos");
+        if (!contenedor) {
+            console.warn("contenedor aún no existe");
             return;
         }
 
-        inscritos.forEach(i => {
+        if (inscritos.length === 0) {
+            contenedor.innerHTML = `
+                <button class="btn btn-secondary mb-3" id="btnVolver">
+                    ← Volver
+                </button>
 
+                <p>No hay inscritos</p>
+            `;
+            return;
+        }
+
+        contenedor.innerHTML = `
+            <button class="btn btn-secondary mb-3" id="btnVolver">
+                ← Volver
+            </button>
+
+            <h5>Personas inscritas:</h5>
+        `;
+
+        inscritos.forEach(i => {
             contenedor.innerHTML += `
                 <div class="border rounded p-3 mb-2">
-
                     <strong>${i.nombre}</strong><br>
                     <small>Cédula: ${i.identificacion}</small><br>
                     <small>Correo: ${i.correo}</small><br>
                     <small>Teléfono: ${i.telefono}</small>
-
-                    <p class="mt-2">
-                        ${i.descripcion}
-                    </p>
-
+                    <p class="mt-2">${i.descripcion}</p>
                 </div>
             `;
         });
@@ -98,4 +114,4 @@ document.addEventListener("click", async (e) => {
     } catch (error) {
         console.error(error);
     }
-});
+}

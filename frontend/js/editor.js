@@ -3,8 +3,6 @@
 // =============================
 document.addEventListener("click", async function (e) {
 
-    const contenedor = document.getElementById("contenido-dinamico");
-
     // =============================
     // NAVEGACIÓN
     // =============================
@@ -21,12 +19,9 @@ document.addEventListener("click", async function (e) {
 
     if (e.target.closest("#menu-borrador")) {
         e.preventDefault();
-        cargarVista(
-            "./components/eventos-borrador.html",
-            () => {
-                window.cargarEventos?.("pendiente");
-            }
-        );
+        cargarVista("./components/eventos-borrador.html", () => {
+            window.cargarEventosBorrador?.("pendiente");
+        });
     }
 
     if (e.target.closest("#menu-consultas")) {
@@ -36,11 +31,9 @@ document.addEventListener("click", async function (e) {
 
     if (e.target.closest("#menu-inscripciones")) {
         e.preventDefault();
-        cargarVista("./components/inscripciones-evento.html",
-            () => {
-                window.cargarEventosInscripciones?.();
-            }
-        );
+        cargarVista("./components/inscripciones-evento.html", () => {
+            window.cargarEventosInscripciones?.();
+        });
     }
 
     // =============================
@@ -64,12 +57,10 @@ document.addEventListener("click", async function (e) {
 
     const eventoId = card.getAttribute("data-id");
 
-    // VER ANOTACIONES
     if (e.target.closest(".btn-anotaciones")) {
         mostrarAnotaciones(eventoId);
     }
 
-    // ELIMINAR
     if (e.target.closest(".btn-eliminar-evento")) {
         eliminarEvento(eventoId);
     }
@@ -80,7 +71,6 @@ document.addEventListener("click", async function (e) {
 // =============================
 // FUNCIONES AUXILIARES
 // =============================
-
 async function cargarVista(ruta, callback = null) {
     try {
         const res = await fetch(ruta);
@@ -107,7 +97,7 @@ function toggleTabs(tipo) {
         pendientesBtn?.classList.remove("active");
     }
 
-    cargarEventos(tipo);
+    window.cargarEventosBorrador?.(tipo);
 }
 
 
@@ -157,7 +147,7 @@ function eliminarEvento(eventoId) {
 
                 Swal.fire("Eliminado", "Evento eliminado correctamente", "success");
 
-                setTimeout(() => cargarEventos("rechazado"), 500);
+                setTimeout(() => window.cargarEventosBorrador?.("rechazado"), 500);
 
             } catch (error) {
                 console.error(error);
@@ -203,7 +193,6 @@ document.addEventListener("submit", async function (e) {
         });
 
         Swal.fire("Éxito", "Evento enviado a aprobación", "success");
-
         e.target.reset();
 
     } catch (error) {
@@ -212,10 +201,10 @@ document.addEventListener("submit", async function (e) {
     }
 });
 
+
 // =============================
 // FORMULARIO MULTIPASO
 // =============================
-
 window.nextStep = function () {
     document.getElementById("step-1").style.display = "none";
     document.getElementById("step-2").style.display = "block";
@@ -236,7 +225,7 @@ window.prevStep = function () {
 // =============================
 // CARGAR EVENTOS (pendiente/rechazado)
 // =============================
-async function cargarEventos(filtroEstado = null) {
+async function cargarEventosBorrador(filtroEstado = null) {
     try {
         const res = await fetch("http://localhost:3000/eventos");
         const eventos = await res.json();
@@ -286,7 +275,7 @@ async function cargarEventos(filtroEstado = null) {
     }
 }
 
-window.cargarEventos = cargarEventos;
+window.cargarEventosBorrador = cargarEventosBorrador;
 
 
 // =============================
