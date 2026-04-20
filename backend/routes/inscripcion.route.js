@@ -7,7 +7,7 @@ const Inscripcion = require("../models/inscripcion.model");
 // =============================
 router.post("/", async (req, res) => {
 
-    console.log("BODY:", req.body); //CAMBIOS RECIENTES
+    console.log("BODY:", req.body); 
 
     const {
         nombre,
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
         correo,
         telefono,
         descripcion,
-        eventoId //CAMBIOS RECIENTES:
+        eventoId 
     } = req.body;
 
     // Validación básica
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
             correo,
             telefono,
             descripcion,
-            eventoId //CAMBIOS RECIENTES:
+            eventoId 
         });
 
         const guardado = await nuevaInscripcion.save();
@@ -121,7 +121,7 @@ router.get("/:id", async (req, res) => {
 
 });
 
-// Obtener inscripciones por evento. CAMBIOS RECIENTES:
+// Obtener inscripciones por evento
 router.get("/evento/:eventoId", async (req, res) => {
     try {
         const inscripciones = await Inscripcion.find({
