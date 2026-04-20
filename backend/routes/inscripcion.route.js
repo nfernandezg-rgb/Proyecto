@@ -15,7 +15,8 @@ router.post("/", async (req, res) => {
         distrito,
         correo,
         telefono,
-        descripcion
+        descripcion,
+        eventoId
     } = req.body;
 
     // Validación básica
@@ -35,7 +36,8 @@ router.post("/", async (req, res) => {
             distrito,
             correo,
             telefono,
-            descripcion
+            descripcion,
+            eventoId
         });
 
         const guardado = await nuevaInscripcion.save();
@@ -64,6 +66,27 @@ router.get("/", async (req, res) => {
     } catch (error) {
         res.status(500).json({
             msj: "Error al obtener inscripciones",
+            error
+        });
+    }
+
+});
+
+// =============================
+// Obtener inscripciones por evento
+// =============================
+router.get("/evento/:eventoId", async (req, res) => {
+
+    try {
+        const inscritos = await Inscripcion.find({
+            eventoId: req.params.eventoId
+        });
+
+        res.json(inscritos);
+
+    } catch (error) {
+        res.status(500).json({
+            msj: "Error al obtener inscritos",
             error
         });
     }
@@ -117,5 +140,7 @@ router.delete("/:id", async (req, res) => {
     }
 
 });
+
+
 
 module.exports = router;
