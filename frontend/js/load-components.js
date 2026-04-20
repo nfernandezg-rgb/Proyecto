@@ -65,36 +65,6 @@ document.addEventListener("click", (e) => {
     if (box) box.classList.toggle("d-none");
   }
 
-  // MODAL CONSULTA
-  if (e.target.id === "btnEnviarConsulta") {
-
-    const correo = document.getElementById("correoConsulta")?.value;
-    const consulta = document.getElementById("textoConsulta")?.value;
-
-    if (!correo || !consulta) {
-      Swal.fire({
-        icon: "error",
-        title: "Campos incompletos",
-        text: "Por favor complete todos los campos"
-      });
-      return;
-    }
-
-    Swal.fire({
-      icon: "success",
-      title: "Consulta enviada",
-      text: "Su consulta ha sido enviada correctamente"
-    });
-
-    document.getElementById("formConsulta")?.reset();
-
-    const modalEl = document.getElementById('modalConsulta');
-    if (modalEl) {
-      const modal = bootstrap.Modal.getInstance(modalEl);
-      modal?.hide();
-    }
-  }
-
 });
 
 

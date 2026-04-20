@@ -152,7 +152,7 @@
 
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" type="submit">Enviar</button>
+                            <button class="btn btn-primary" type="submit" form="formConsulta">Enviar</button>
                         </div>
 
                     </div>
@@ -244,38 +244,60 @@
         cargarDetalleEvento();
 
         //codigo js necesario para completar consulta 
-        document.getElementById("formConsulta").addEventListener("submit", async (e) => {
+        document.addEventListener("submit", async (e) => {
+            console.log("ALGO SE INTENTÓ ENVIAR"); //  ESTE
 
-            e.preventDefault();
+            if (e.target.id === "formConsulta") {
 
-            const correo = document.getElementById("correoConsulta").value;
-            const mensaje = document.getElementById("textoConsulta").value;
+                console.log("FORM CONSULTA DETECTADO"); // ESTE
 
-            if (!correo || !mensaje) {
-                Swal.fire("Error", "Complete todos los campos", "error");
-                return;
+                e.preventDefault();
+
+                const correo = document.getElementById("correoConsulta").value;
+                const mensaje = document.getElementById("textoConsulta").value;
+
+                if (!correo || !mensaje) {
+                    Swal.fire("Error", "Complete todos los campos", "error");
+                    return;
+                }
+
+                try {
+
+                    await fetch("http://localhost:3000/consultas", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            eventoId: id,
+                            correo,
+                            mensaje
+                        })
+                    });
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Consulta enviada",
+                        text: "Recibirá respuesta a su correo electrónico"
+                    });
+
+                    e.target.reset();
+
+                    const modal = bootstrap.Modal.getInstance(
+                        document.getElementById('modalConsulta')
+                    );
+                    modal?.hide();
+
+                } catch (error) {
+                    console.error(error);
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "No se pudo enviar la consulta"
+                    });
+                }
             }
-
-            await fetch("http://localhost:3000/consultas", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    eventoId: id,
-                    correo,
-                    mensaje
-                })
-            });
-
-            Swal.fire("Éxito", "Consulta enviada", "success");
-
-            e.target.reset();
-
-            const modal = bootstrap.Modal.getInstance(
-                document.getElementById('modalConsulta')
-            );
-            modal.hide();
 
         });
         //
