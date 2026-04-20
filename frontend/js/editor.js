@@ -31,7 +31,11 @@ document.addEventListener("click", async function (e) {
 
     if (e.target.closest("#menu-inscripciones")) {
         e.preventDefault();
-        cargarVista("./components/inscripciones-evento.html");
+        cargarVista("./components/inscripciones-evento.html",
+            () => {
+                window.cargarEventosInscripciones?.();
+            }
+        );
     }
 
     // =============================
@@ -72,16 +76,18 @@ document.addEventListener("click", async function (e) {
 // FUNCIONES AUXILIARES
 // =============================
 
-function cargarVista(ruta, callback = null) {
-    fetch(ruta)
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById("contenido-dinamico").innerHTML = html;
+async function cargarVista(ruta, callback = null) {
+    try {
+        const res = await fetch(ruta);
+        const html = await res.text();
 
-            if (callback) {
-                setTimeout(callback, 100);
-            }
-        });
+        const contenedor = document.getElementById("contenido-dinamico");
+        contenedor.innerHTML = html;
+
+        if (callback) callback();
+    } catch (error) {
+        console.error("Error cargando vista:", error);
+    }
 }
 
 function toggleTabs(tipo) {
