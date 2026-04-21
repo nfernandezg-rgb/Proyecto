@@ -185,24 +185,33 @@
     <script src="js/load-components.js"></script>
 
     <script>
+     // =============================
+     // OBTENER ID DEL EVENTO DESDE URL
+     // =============================
+     // Permite cargar dinamicamente el evento seleccionado
         const params = new URLSearchParams(window.location.search);
         const id = params.get("id");
 
+        // =============================
+       // CARGAR DETALLE DEL EVENTO
+       // =============================
+       // Consulta el backend y llena todos los campos del HTML
         async function cargarDetalleEvento() {
 
             try {
                 const res = await fetch(`http://localhost:3000/eventos/${id}`);
                 const evento = await res.json();
 
-                // TITULO
+                // Datos principales
                 document.querySelector("h4").textContent = evento.nombre;
 
-                // FECHA Y HORA
+                
                 document.getElementById("detalle-fecha").textContent = evento.fecha;
                 document.getElementById("detalle-hora").textContent =
                     `${evento.horaInicio} - ${evento.horaFin}`;
 
-                // DIA Y MES
+                // -------- FORMATEO DE FECHA --------
+                // Se separa el formato YYYY-MM-DD para mostrar día y mes
                 const partes = evento.fecha.split("-");
                 document.getElementById("detalle-dia").textContent = partes[2];
                 document.getElementById("detalle-mes").textContent = partes[1];
@@ -241,29 +250,33 @@
                 console.error("Error cargando detalle:", error);
             }
         }
-
+        // Ejecuta la carga al abrir la página
         cargarDetalleEvento();
-
-        //codigo js necesario para completar consulta 
+      
+        // =============================
+        // ENVÍO DE CONSULTAS
+        // =============================
+       // Maneja el formulario del modal para enviar preguntas sobre el evento
         document.addEventListener("submit", async (e) => {
-            console.log("ALGO SE INTENTÓ ENVIAR"); //  ESTE
+            console.log("ALGO SE INTENTÓ ENVIAR"); //  debug
 
             if (e.target.id === "formConsulta") {
 
-                console.log("FORM CONSULTA DETECTADO"); // ESTE
+                console.log("FORM CONSULTA DETECTADO"); // debug
 
                 e.preventDefault();
 
                 const correo = document.getElementById("correoConsulta").value;
                 const mensaje = document.getElementById("textoConsulta").value;
-
+                
+                //validacion
                 if (!correo || !mensaje) {
                     Swal.fire("Error", "Complete todos los campos", "error");
                     return;
                 }
 
                 try {
-
+                    //envio al backend
                     await fetch("http://localhost:3000/consultas", {
                         method: "POST",
                         headers: {
@@ -275,15 +288,15 @@
                             mensaje
                         })
                     });
-
+                    //feedback al usuario
                     Swal.fire({
                         icon: "success",
                         title: "Consulta enviada",
                         text: "Recibirá respuesta a su correo electrónico"
                     });
-
+                    // Limpieza del formulario
                     e.target.reset();
-
+                    //cerramos modal
                     const modal = bootstrap.Modal.getInstance(
                         document.getElementById('modalConsulta')
                     );
@@ -305,6 +318,10 @@
     </script>
 
     <script>
+        // =============================
+        // REDIRECCIÓN A INSCRIPCIÓN
+        // =============================
+        // Lleva al usuario al formulario con el ID del evento
         document.getElementById("btnInscribirse").addEventListener("click", () => {
             window.location.href = `formulario-inscripcion.html?id=${id}`;
         });
