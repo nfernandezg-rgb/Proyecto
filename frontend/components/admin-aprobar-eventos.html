@@ -1,0 +1,97 @@
+<div>
+
+    <!-- MIGA DE PAN -->
+    <small class="text-muted">Inicio / Eventos / <strong>Aprobación de Eventos</strong></small>
+
+    <!-- BUSCADOR -->
+    <div class="mt-3 mb-4">
+        <label class="form-label">Buscador de Eventos</label>
+
+        <div class="d-flex gap-2">
+            <select class="form-select w-auto">
+                <option>Título del Evento</option>
+            </select>
+
+            <input type="text" class="form-control" placeholder="Ingrese el dato indicado">
+
+            <button class="btn btn-primary">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- TÍTULO -->
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-file-earmark-text fs-4"></i>
+        <h4 class="mb-0">Aprobación de Eventos</h4>
+    </div>
+
+    <hr>
+
+    <!-- LISTA -->
+    <div id="lista-eventos-admin">
+
+        <!-- ITEM EVENTO -->
+        <div class="border rounded p-3 mb-4" data-id="1">
+
+            <div class="d-flex justify-content-between align-items-start">
+
+                <!-- INFO -->
+                <div>
+                    <strong>Publicación de Política Nacional...</strong><br>
+                    <small>Fecha del evento: 30/12/2020</small><br><br>
+
+                    <small><strong>Autor:</strong> Nombre Apellido</small><br>
+                    <small><strong>Fecha para publicación:</strong> 22/12/2020</small>
+                </div>
+
+                <!-- ACCIONES -->
+                <div class="d-flex flex-column align-items-end gap-2">
+
+                    <!-- ACCIONES SUPERIORES -->
+                    <div class="d-flex gap-2">
+
+                        <button class="btn btn-outline-secondary btn-sm btn-icon btn-ver">
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                        <button class="btn btn-outline-primary btn-sm btn-icon btn-editar">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <button class="btn btn-outline-danger btn-sm btn-icon btn-eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </div>
+
+                    <!-- ACCIONES INFERIORES -->
+                    <div class="d-flex gap-2">
+
+                        <button class="btn btn-outline-danger btn-sm btn-icon btn-rechazar">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+
+                        <button class="btn btn-outline-success btn-sm btn-icon btn-aprobar">
+                            <i class="bi bi-check-lg"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MENSAJE VACÍO (para backend luego) -->
+        <!--
+        <div class="text-center py-5">
+            <h6>No hay eventos pendientes</h6>
+            <p class="text-muted">Aquí aparecerán los eventos enviados por los editores</p>
+        </div>
+        -->
+
+    </div>
+
+</div>

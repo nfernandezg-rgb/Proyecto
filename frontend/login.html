@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- CSS PROPIO -->
+  <link rel="stylesheet" href="css/estilos-components.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+<!-- HEADER + NAVBAR -->
+<div class="header-container">
+  <div id="header"></div>
+  <div id="navbar"></div>
+</div>
+
+<!-- CONTENIDO LOGIN -->
+<main class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+
+  <div class="login-box p-4">
+
+    <h3 class="text-center mb-4">Bienvenido</h3>
+
+    <form id="formLogin">
+
+      <!-- USUARIO -->
+      <div class="input-group mb-3">
+        <span class="input-group-text"><i class="bi bi-person"></i></span>
+        <input type="text" class="form-control" id="usuario" placeholder="nombre de usuario o correo electrónico" required>
+      </div>
+
+      <!-- CONTRASEÑA -->
+      <div class="input-group mb-2">
+        <span class="input-group-text"><i class="bi bi-key"></i></span>
+        <input type="password" class="form-control" id="password" placeholder="contraseña" required>
+      </div>
+
+      <div class="text-end mb-3">
+        <small class="text-muted">¿Olvidó su contraseña?</small>
+      </div>
+
+      <!-- BOTÓN LOGIN -->
+      <div class="d-grid mb-3">
+        <button type="button" class="btn btn-primary" id="btnLogin">
+          Iniciar Sesión
+        </button>
+      </div>
+
+      <!-- REGISTRO -->
+      <div class="text-center">
+        <small>¿Aún no tiene cuenta?</small>
+      </div>
+
+      <div class="d-grid mt-2">
+        <button type="button" class="btn btn-outline-primary">
+          Crear Cuenta
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</main>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/load-components.js"></script>
+
+</body>
+</html>

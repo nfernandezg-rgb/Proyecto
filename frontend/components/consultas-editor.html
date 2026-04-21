@@ -1,0 +1,71 @@
+<div>
+
+    <!-- TÍTULO -->
+    <h4 class="mb-3">Consultas de Eventos</h4>
+
+    <!-- TABS -->
+    <div class="mb-4">
+        <button class="btn btn-light me-2" id="tab-resueltas">Consultas Resueltas</button>
+        <button class="btn btn-secondary" id="tab-pendientes">Pendientes de respuestas</button>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="mb-4">
+        <div class="d-flex gap-2">
+            <select class="form-select w-auto">
+                <option>Título de Eventos</option>
+            </select>
+
+            <input type="text" class="form-control" placeholder="Ingrese el dato indicado">
+
+            <button class="btn btn-primary">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- LISTA -->
+    <div id="lista-consultas">
+
+ 
+
+    </div>
+
+</div>
+
+<!-- MODAL RESPUESTA -->
+<div class="modal fade" id="modalRespuesta" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Respuesta de Consulta</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          Para resolver la consulta del usuario, escriba su respuesta.
+        </p>
+
+        <textarea 
+          id="respuestaTexto"
+          class="form-control"
+          rows="5"
+          placeholder="Introduzca el dato solicitado">
+        </textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-light" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+
+        <button class="btn btn-primary" id="btnEnviarRespuesta">
+          Aceptar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

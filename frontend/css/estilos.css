@@ -1,0 +1,275 @@
+:root {
+  --azul-claro: #9CC8FF;
+  --azul-principal: #006AEA;
+  --azul-oscuro: #162A98;
+  --gris-claro: #D2D2D2;
+  --gris-texto: #7C7B75;
+  --gris-fondo: #F5F5F5;
+}
+
+/* ============================= */
+/* Generales */
+/* ============================= */
+
+body {
+  background-color: var(--gris-fondo);
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+/* ============================= */
+/* Filtros y cards */
+/* ============================= */
+
+.filtro-box {
+  background-color: var(--gris-claro);
+}
+
+.evento-card {
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.evento-card:hover {
+  transform: scale(1.02);
+}
+
+/* ============================= */
+/* Fecha */
+/* ============================= */
+
+.fecha-box {
+  background: var(--azul-oscuro);
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  min-width: 70px;
+}
+
+.fecha-box h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.fecha-box span {
+  font-size: 12px;
+}
+
+/* ============================= */
+/* Hero y llamada a accion/CTA */
+/* ============================= */
+
+.hero {
+  height: 60vh;
+  background: linear-gradient(to right, var(--azul-oscuro), var(--azul-principal));
+  color: white;
+}
+
+.cta {
+  background-color: var(--gris-claro);
+}
+
+.cta-inscripcion {
+  background: linear-gradient(to right, var(--azul-oscuro), var(--azul-principal));
+  color: white;
+}
+
+.cta-inscripcion p {
+  max-width: 700px;
+  margin: auto;
+}
+
+.cta-inscripcion button {
+  font-weight: bold;
+}
+
+/* ============================= */
+/* Footer */
+/* ============================= */
+
+.footer {
+  background-color: var(--gris-texto);
+  color: white;
+}
+
+/* ============================= */
+/* Modals */
+/* ============================= */
+
+.modal-content {
+  border-radius: 10px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.modal-footer .btn {
+  min-width: 200px;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+/* ============================= */
+/* Detalles de evento */
+/* ============================= */
+
+.detalle-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.detalle-card img {
+  height: 250px;
+  object-fit: cover;
+}
+
+.info-card {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #F9F9F9;
+}
+
+.publico-card {
+  background: var(--azul-oscuro);
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background: var(--azul-oscuro);
+  color: white;
+}
+
+.btn-inscripcion {
+  background: var(--azul-oscuro);
+  color: white;
+  border-radius: 8px;
+}
+
+.btn-inscripcion:hover {
+  background: var(--azul-principal);
+}
+
+.lectura-box {
+  background: linear-gradient(to right, var(--azul-oscuro), #0B1C5C);
+  color: white;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+/* ============================= */
+/* Formularios */
+/* ============================= */
+
+.form-container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.step {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ccc;
+  line-height: 30px;
+  margin: 0 5px;
+}
+
+.step.active {
+  background: var(--azul-oscuro);
+  color: white;
+}
+
+/* ============================= */
+/* LOGIN */
+/* ============================= */
+
+.login-box {
+  width: 350px;
+  background: var(--gris-fondo);
+  border-radius: 10px;
+}
+
+.login-box h3 {
+  font-weight: 600;
+}
+
+.input-group-text {
+  background-color: var(--azul-oscuro);
+  color: white;
+}
+
+/* ============================= */
+/* Editor dashboard
+/* ============================= */
+
+.editor-topbar {
+  height: 60px;
+  background: linear-gradient(90deg, var(--azul-oscuro), var(--azul-principal));
+  color: white;
+}
+
+.sidebar {
+  width: 250px;
+  background: var(--gris-fondo);
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar a {
+  text-decoration: none;
+  display: block;
+  padding: 8px 0;
+  color: #333;
+}
+
+.sidebar a:hover {
+  color: var(--azul-principal);
+}
+
+/* Perfil */
+
+.perfil-circle {
+  width: 35px;
+  height: 35px;
+  background: white;
+  color: var(--azul-oscuro);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Botones con icono */
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

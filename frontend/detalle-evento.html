@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Evento</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/estilos-components.css">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header-container">
+        <div id="header"></div>
+        <div id="navbar"></div>
+    </div>
+
+    <!-- CONTENIDO -->
+    <main class="container my-5">
+
+        <!-- TITULO -->
+        <h2>Eventos | Política Nacional de Discapacidad</h2>
+
+        <!-- IMAGEN + INFO -->
+        <div class="card detalle-card mb-4">
+
+            <img src="https://picsum.photos/900/300" class="card-img-top">
+
+            <div class="card-body d-flex gap-3">
+
+                <!-- FECHA -->
+                <div class="fecha-box text-center">
+                    <h3 id="detalle-dia">--</h3>
+                    <span id="detalle-mes">--</span>
+                </div>
+
+                <!-- INFO -->
+                <div>
+                    <h4>Nombre del evento</h4>
+                    <p id="detalle-fecha">--</p>
+                    <p id="detalle-hora">--</p>
+                    <p>Plataforma Zoom</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="row mb-4">
+
+            <div class="col-md-8">
+                <h5>Descripción</h5>
+                <p id="detalle-descripcion"></p>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card p-3 info-card">
+                    <h6>Información del evento</h6>
+                    <p id="detalle-info-lateral"></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PUBLICO META -->
+        <div class="row mb-4">
+
+            <div class="col-md-6">
+                <div class="card p-3 publico-card">
+                    <h6>Público Meta</h6>
+                    <p id="detalle-publico"></p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h6>Objetivos</h6>
+                <p id="detalle-objetivos"></p>
+            </div>
+
+        </div>
+
+        <!-- CRONOGRAMA -->
+        <div class="mb-4">
+            <h5>Programa (Agenda del evento)</h5>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Actividad</th>
+                    </tr>
+                </thead>
+
+                <tbody id="detalle-agenda"></tbody>
+            </table>
+        </div>
+
+        <!-- INFO ADICIONAL -->
+        <div class="mb-4">
+
+            <h5>Información adicional</h5>
+
+            <p id="detalle-info"></p>
+
+            <div class="d-flex gap-3 flex-wrap">
+
+                <button id="btnLectura" class="btn btn-outline-primary">
+                    Lectura fácil del evento
+                </button>
+
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalConsulta">
+                    Realizar consulta
+                </button>
+
+            </div>
+
+            <!-- MODAL CONSULTA -->
+            <div class="modal fade" id="modalConsulta" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title w-100 text-center">Consulta de Evento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <p class="text-center small">
+                                Escriba su consulta y su correo electrónico.
+                            </p>
+
+                            <form id="formConsulta">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Correo electrónico</label>
+                                    <input type="email" id="correoConsulta" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Consulta</label>
+                                    <textarea class="form-control" id="textoConsulta" rows="4" required></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" type="submit" form="formConsulta">Enviar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- LECTURA FACIL -->
+            <div id="lecturaFacil" class="lectura-box mt-4 d-none">
+                <h5>Lectura fácil</h5>
+                <p id="detalle-lectura"></p>
+            </div>
+
+        </div>
+
+        <!-- BOTÓN -->
+    
+        <div class="text-center my-4">
+            <a id="btnInscribirse" class="btn btn-inscripcion px-5 py-2">
+                Inscripción a Evento
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <div id="footer"></div>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/load-components.js"></script>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        async function cargarDetalleEvento() {
+
+            try {
+                const res = await fetch(`http://localhost:3000/eventos/${id}`);
+                const evento = await res.json();
+
+                // TITULO
+                document.querySelector("h4").textContent = evento.nombre;
+
+                // FECHA Y HORA
+                document.getElementById("detalle-fecha").textContent = evento.fecha;
+                document.getElementById("detalle-hora").textContent =
+                    `${evento.horaInicio} - ${evento.horaFin}`;
+
+                // DIA Y MES
+                const partes = evento.fecha.split("-");
+                document.getElementById("detalle-dia").textContent = partes[2];
+                document.getElementById("detalle-mes").textContent = partes[1];
+
+                // DESCRIPCION
+                document.getElementById("detalle-descripcion").textContent = evento.descripcion;
+
+                // INFO LATERAL
+                document.getElementById("detalle-info-lateral").innerHTML = `
+                Fecha: ${evento.fecha}<br>
+                Hora: ${evento.horaInicio} - ${evento.horaFin}<br>
+                Modalidad: Virtual
+            `;
+
+                // PUBLICO
+                document.getElementById("detalle-publico").textContent = evento.publico;
+
+                // OBJETIVOS
+                document.getElementById("detalle-objetivos").textContent = evento.objetivos;
+
+                // AGENDA
+                document.getElementById("detalle-agenda").innerHTML = `
+                <tr>
+                    <td>${evento.horaInicio}</td>
+                    <td>${evento.agenda}</td>
+                </tr>
+            `;
+
+                // INFO ADICIONAL
+                document.getElementById("detalle-info").textContent = evento.infoAdicional;
+
+                // LECTURA FACIL
+                document.getElementById("detalle-lectura").textContent = evento.agendaFacil;
+
+            } catch (error) {
+                console.error("Error cargando detalle:", error);
+            }
+        }
+
+        cargarDetalleEvento();
+
+        //codigo js necesario para completar consulta 
+        document.addEventListener("submit", async (e) => {
+            console.log("ALGO SE INTENTÓ ENVIAR"); //  ESTE
+
+            if (e.target.id === "formConsulta") {
+
+                console.log("FORM CONSULTA DETECTADO"); // ESTE
+
+                e.preventDefault();
+
+                const correo = document.getElementById("correoConsulta").value;
+                const mensaje = document.getElementById("textoConsulta").value;
+
+                if (!correo || !mensaje) {
+                    Swal.fire("Error", "Complete todos los campos", "error");
+                    return;
+                }
+
+                try {
+
+                    await fetch("http://localhost:3000/consultas", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            eventoId: id,
+                            correo,
+                            mensaje
+                        })
+                    });
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Consulta enviada",
+                        text: "Recibirá respuesta a su correo electrónico"
+                    });
+
+                    e.target.reset();
+
+                    const modal = bootstrap.Modal.getInstance(
+                        document.getElementById('modalConsulta')
+                    );
+                    modal?.hide();
+
+                } catch (error) {
+                    console.error(error);
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "No se pudo enviar la consulta"
+                    });
+                }
+            }
+
+        });
+        //
+    </script>
+
+    <script>
+        document.getElementById("btnInscribirse").addEventListener("click", () => {
+            window.location.href = `formulario-inscripcion.html?id=${id}`;
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>
